@@ -212,20 +212,24 @@
       <label for="menciones">Nombres, fechas o palabras que deben aparecer sí o sí</label>
       <input id="menciones" placeholder="Ej.: Marta y Joan · 14 de junio · «Cadaqués»">
       <div style="margin-top:28px"><button type="submit" class="btn btn-primary">Canjear mi canción</button></div>
-      <div class="summary" id="ok"><h3 style="margin-top:0">¡Recibido!</h3><p>Ya tenemos tu historia. Te escribiremos a <strong id="okMail"></strong> para confirmar y, en 72 h, recibirás tu canción.</p><p class="hint" id="okFallback" style="display:none">Si no recibes confirmación en 24 h, escríbenos a <a href="mailto:hola@onlyyourssong.com">hola@onlyyourssong.com</a> con este resumen:</p><pre id="okTxt" style="display:none"></pre></div>
+      <div class="summary" id="ok"><h3 style="margin-top:0">Solicitud recibida</h3><p>Ya tenemos tu historia. Comprobaremos el código de tu tarjeta y te escribiremos a <strong id="okMail"></strong> en menos de 24 h para confirmarlo; a partir de esa confirmación, recibirás tu canción en 72 h.</p><p class="hint" id="okFallback" style="display:none">Si no recibes confirmación en 24 h, escríbenos a <a href="mailto:hola.onlyyours@gmail.com">hola.onlyyours@gmail.com</a> con este resumen:</p><pre id="okTxt" style="display:none"></pre></div>
     </form>
   </div>
 </section>
-<footer><div class="wrap"><img src="logo.png" alt="ONLY YOURS"><div><strong style="color:#fff;font-family:'Playfair Display',serif;font-size:1.1rem;font-style:italic">Your story. Your song.</strong><br><a href="mailto:hola@onlyyourssong.com">hola@onlyyourssong.com</a></div><div class="legal">© ONLY YOURS · Andorra</div></div></footer>
+<footer><div class="wrap"><img src="logo.png" alt="ONLY YOURS"><div><strong style="color:#fff;font-family:'Playfair Display',serif;font-size:1.1rem;font-style:italic">Your story. Your song.</strong><br><a href="mailto:hola.onlyyours@gmail.com">hola.onlyyours@gmail.com</a></div><div class="legal">© ONLY YOURS · Andorra</div></div></footer>
 <script>
 const WEB3FORMS_KEY="";
+const CONTACT_MAIL="hola.onlyyours@gmail.com";
 const v=id=>document.getElementById(id).value.trim();
 document.getElementById('giftForm').addEventListener('submit',async e=>{
   e.preventDefault();
   for(const id of ['codigo','nombre','email','para','historia']){const el=document.getElementById(id); if(!el.value.trim()){el.focus(); el.style.borderColor='#e4563b'; return;} el.style.borderColor='';}
   const txt=`CANJE REGALO ONLY YOURS\nCódigo: ${v('codigo').toUpperCase()}\nComercio: ${v('comercio')||'-'}\nNombre: ${v('nombre')}\nCorreo: ${v('email')}\nPara: ${v('para')}\nOcasión: ${v('ocasion')}\nEstilo: ${v('estilo')} · Voz: ${v('voz')} · Idioma: ${v('idioma')}\nFecha límite: ${v('fecha')||'sin fecha'}\nDebe aparecer: ${v('menciones')||'-'}\n\nHISTORIA:\n${v('historia')}`;
+  const code=v('codigo').toUpperCase().replace(/\s+/g,'');
+  if(!/^OY-?[A-Z0-9]{4,10}$/.test(code)){const el=document.getElementById('codigo'); el.focus(); el.style.borderColor='#e4563b'; alert('El código de la tarjeta tiene el formato OY-XXXXXX. Revísalo, por favor.'); return;}
   let ok=false;
-  if(WEB3FORMS_KEY){try{const r=await fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({access_key:WEB3FORMS_KEY,subject:`CANJE ${v('codigo').toUpperCase()} · ${v('ocasion')} · ${v('para')}`,from_name:'ONLY YOURS regalo',replyto:v('email'),pedido:txt})});ok=(await r.json()).success;}catch(_){}}
+  try{const r=await fetch('https://formsubmit.co/ajax/'+CONTACT_MAIL,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({_subject:`CANJE ${code} · ${v('ocasion')} · ${v('para')} · PENDIENTE DE VALIDAR`,_template:'box',_replyto:v('email'),nombre:v('nombre'),email:v('email'),pedido:txt})});const j=await r.json();ok=(j.success==='true'||j.success===true);}catch(_){}
+  if(!ok && WEB3FORMS_KEY){try{const r=await fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({access_key:WEB3FORMS_KEY,subject:`CANJE ${v('codigo').toUpperCase()} · ${v('ocasion')} · ${v('para')}`,from_name:'ONLY YOURS regalo',replyto:v('email'),pedido:txt})});ok=(await r.json()).success;}catch(_){}}
   document.getElementById('okMail').textContent=v('email');
   if(!ok){document.getElementById('okFallback').style.display='';const p=document.getElementById('okTxt');p.style.display='';p.textContent=txt;}
   const s=document.getElementById('ok'); s.classList.add('show'); s.scrollIntoView({behavior:'smooth'});

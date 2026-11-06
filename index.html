@@ -225,7 +225,7 @@
     <aside class="demo" aria-label="Escucha nuestra canción">
       <small>Escucha cómo suena</small>
       <h3>«Tu historia, tu canción»</h3>
-      <small>Nuestra canción de presentación, hecha igual que haremos la tuya.</small>
+      <small>Producida por DJAIMEENPAZ, igual que haremos la tuya.</small>
       <div class="player">
         <button type="button" class="playbtn" id="playBtn" aria-label="Reproducir"><svg id="playIco" viewBox="0 0 24 24" width="26" height="26"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></button>
         <div class="wave" id="wave" aria-hidden="true">
@@ -233,10 +233,10 @@
         </div>
       </div>
       <div class="progress" id="progress"><div class="bar" id="bar"></div></div>
-      <div class="times"><span id="cur">0:00</span><span id="dur">2:43</span></div>
+      <div class="times"><span id="cur">0:00</span><span id="dur">4:17</span></div>
       <audio id="audio" preload="metadata" src="tu-historia-tu-cancion.mp3"></audio>
       <div style="margin-top:12px">
-        <span class="tag">Presentación</span><span class="tag">Pop emocional</span><span class="tag">Castellano</span>
+        <span class="tag">Presentación</span><span class="tag">House melódico</span><span class="tag">Castellano</span>
       </div>
     </aside>
   </div>
@@ -458,6 +458,7 @@
         <h3 style="margin-top:0">¡Pedido recibido!</h3>
         <p>Gracias. Ya tenemos tu historia y el pago confirmado. Te escribiremos a <strong id="thanksMail"></strong> en menos de 24 h con la confirmación y la fecha de entrega.</p>
         <p class="hint">Referencia: <span id="thanksRef"></span></p>
+        <p class="hint" id="thanksNote"></p>
       </div>
     </form>
   </div>
@@ -532,14 +533,23 @@ ${o.historia}`;
   return o;
 }
 async function sendOrder(o,extra){
-  if(!WEB3FORMS_KEY) return false;
+  const subject=`ENCARGO ${o.code} · ${o.plan} · ${o.para}${extra&&extra.paid?' · PAGADO':' · pendiente de pago'}`;
+  const estado=extra?JSON.stringify(extra):'pendiente de pago';
+  // 1) FormSubmit (sin clave; destino CONTACT_MAIL)
   try{
-    const r=await fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({
-      access_key:WEB3FORMS_KEY, subject:`ENCARGO ${o.code} · ${o.plan} · ${o.para}${extra&&extra.paid?' · PAGADO':''}`,
-      from_name:'ONLY YOURS web', replyto:o.email, pedido:o.txt, estado:extra?JSON.stringify(extra):'pendiente de pago'
+    const r=await fetch('https://formsubmit.co/ajax/'+CONTACT_MAIL,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({
+      _subject:subject, _template:'box', _replyto:o.email, nombre:o.nombre, email:o.email, pedido:o.txt, estado:estado
     })});
-    const j=await r.json(); return !!j.success;
-  }catch(e){return false;}
+    const j=await r.json(); if(j && (j.success==='true'||j.success===true)) return true;
+  }catch(e){}
+  // 2) Web3Forms si hay clave
+  if(WEB3FORMS_KEY){ try{
+    const r=await fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({
+      access_key:WEB3FORMS_KEY, subject, from_name:'ONLY YOURS web', replyto:o.email, pedido:o.txt, estado
+    })});
+    const j=await r.json(); if(j.success) return true;
+  }catch(e){} }
+  return false;
 }
 function loadSdk(){
   if(sdkLoading) return sdkLoading;
@@ -564,7 +574,7 @@ document.getElementById('orderForm').addEventListener('submit',async e=>{
   document.getElementById('orderCode').textContent=`Encargo ${ORDER.code} · ${ORDER.plan} · ${ORDER.price} €`;
   const s=document.getElementById('summary'); s.classList.add('show'); s.scrollIntoView({behavior:'smooth',block:'start'});
   const st=document.getElementById('payStatus'); st.textContent='Guardando tu historia…';
-  sendOrder(ORDER,null).then(ok=>{ st.textContent= ok ? 'Historia guardada. Completa el pago para confirmar el encargo.' : ''; });
+  sendOrder(ORDER,null).then(ok=>{ st.textContent= ok ? 'Historia guardada. Completa el pago para confirmar el encargo.' : 'Completa el pago; después te pediremos confirmar la historia por correo si hiciera falta.'; });
   const box=document.getElementById('paypal-buttons'); box.innerHTML='';
   try{
     await loadSdk();
@@ -573,13 +583,20 @@ document.getElementById('orderForm').addEventListener('submit',async e=>{
       createOrder:(data,actions)=>actions.order.create({purchase_units:[{amount:{currency_code:'EUR',value:String(ORDER.price)},description:`ONLY YOURS – ${ORDER.plan} – ${ORDER.para}`.slice(0,127),custom_id:ORDER.code}]}),
       onApprove:async(data,actions)=>{
         st.textContent='Confirmando el pago…';
-        let cap=null; try{ cap=await actions.order.capture(); }catch(err){}
-        const txid=cap&&cap.purchase_units&&cap.purchase_units[0].payments&&cap.purchase_units[0].payments.captures[0].id || data.orderID;
-        await sendOrder(ORDER,{paid:true,paypal_order:data.orderID,transaccion:txid,importe:ORDER.price+' €'});
+        let cap=null; try{ cap=await actions.order.capture(); }catch(err){ cap=null; }
+        const capt=cap&&cap.purchase_units&&cap.purchase_units[0].payments&&cap.purchase_units[0].payments.captures&&cap.purchase_units[0].payments.captures[0];
+        const okPay = !!(capt && (capt.status==='COMPLETED'||capt.status==='PENDING')) || (cap&&cap.status==='COMPLETED');
+        const txid=(capt&&capt.id)||data.orderID;
+        if(!okPay){
+          st.innerHTML='El pago no se ha podido confirmar. No se te ha cobrado nada o el cobro está en revisión. Vuelve a intentarlo o escríbenos a <a href="mailto:'+CONTACT_MAIL+'">'+CONTACT_MAIL+'</a> indicando la referencia '+ORDER.code+'.';
+          showFallback(ORDER); return;
+        }
+        const sent=await sendOrder(ORDER,{paid:true,paypal_order:data.orderID,transaccion:txid,importe:ORDER.price+' €',estado_pago:capt?capt.status:'COMPLETED'});
         document.getElementById('summary').style.display='none';
         const t=document.getElementById('thanks'); t.style.display='block';
         document.getElementById('thanksMail').textContent=ORDER.email;
         document.getElementById('thanksRef').textContent=ORDER.code+' · '+txid;
+        if(!sent){ document.getElementById('thanksNote').innerHTML='Por seguridad, envíanos también tu historia pulsando aquí: <a href="mailto:'+CONTACT_MAIL+'?subject='+encodeURIComponent('Encargo '+ORDER.code+' · PAGADO '+txid)+'&body='+encodeURIComponent(ORDER.txt)+'">enviar historia por correo</a>.'; }
         t.scrollIntoView({behavior:'smooth',block:'start'});
       },
       onError:()=>{ showFallback(ORDER); st.textContent='No se pudo cargar el pago integrado. Usa el botón de pago alternativo.'; }
