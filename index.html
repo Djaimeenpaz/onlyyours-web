@@ -42,6 +42,12 @@
   nav ul{list-style:none;display:flex;gap:26px;margin:0;padding:0;align-items:center}
   nav li a{color:var(--navy);text-decoration:none;font-weight:500;font-size:.95rem}
   nav li a:hover{color:var(--coral)}
+  .gift-bar{background:var(--navy);color:#fff;text-align:center;font-size:.92rem;padding:10px 16px}
+  .gift-bar a{color:var(--gold);font-weight:600;text-decoration:none;border-bottom:1px solid var(--gold)}
+  .gift-box{background:var(--navy);color:#fff;border-radius:20px;padding:36px 40px;display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap;margin:0 auto 56px}
+  .gift-box h3{font-family:'Playfair Display',serif;font-size:1.6rem;margin:0 0 6px}
+  .gift-box p{margin:0;opacity:.85;max-width:560px}
+  .gift-box .btn-gold{background:var(--gold);color:var(--navy);border:0}
   @media(max-width:860px){nav ul{display:none}}
 
   /* HERO */
@@ -165,6 +171,8 @@
 </head>
 <body>
 
+<div class="gift-bar">¿Te han regalado una tarjeta ONLY YOURS? No tienes que pagar nada: <a href="regalo.html">canjea aquí tu código</a>.</div>
+
 <nav>
   <div class="wrap">
     <a href="#top"><img src="logo.png" alt="ONLY YOURS — Your story. Your song."></a>
@@ -174,6 +182,7 @@
       <li><a href="#paquetes">Precios</a></li>
       <li><a href="#legado">Canción legado</a></li>
       <li><a href="#faq">Preguntas</a></li>
+      <li><a href="regalo.html" style="color:var(--coral);font-weight:600">Tengo un código regalo</a></li>
       <li><a href="#pedido" class="btn btn-primary" style="padding:11px 20px;font-size:.92rem">Encargar mi canción</a></li>
     </ul>
   </div>
@@ -333,6 +342,18 @@
         <a class="btn btn-navy" href="#pedido" data-plan="Canción legado" data-ocasion="Canción legado">Encargar una Canción legado</a>
         <p class="hint" style="margin-top:14px">Tratamos cada encargo con absoluta discreción. Nadie más que tú y la persona que elijas sabrá que existe.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="gift-box" id="regalo">
+      <div>
+        <h3>¿Tienes una tarjeta regalo con código?</h3>
+        <p>Si un comercio, una floristería, una veterinaria o una funeraria te ha regalado una tarjeta ONLY YOURS, tu canción ya está pagada. Olvida los precios de arriba: introduce el código, cuéntanos la historia y la recibes en 72 h.</p>
+      </div>
+      <a class="btn btn-gold" href="regalo.html">Canjear mi código</a>
     </div>
   </div>
 </section>
