@@ -116,6 +116,12 @@
   .dj .phone{max-width:380px;margin:0 auto;border-radius:32px;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.5);border:6px solid #16284a;background:#000}
   .dj video{display:block;width:100%;height:auto}
   .dj .tag{display:inline-block;background:var(--coral);color:#fff;font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;padding:7px 14px;border-radius:999px;font-weight:700;margin-bottom:18px}
+  .lang{position:relative}
+  .lang select{appearance:none;-webkit-appearance:none;background:transparent;border:1.5px solid var(--line);border-radius:999px;padding:8px 30px 8px 14px;font:inherit;font-weight:600;color:var(--navy);cursor:pointer}
+  .lang::after{content:"▾";position:absolute;right:12px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--navy)}
+  .gift-bar .lang-m{display:none;margin-left:10px}
+  .gift-bar .lang-m select{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:4px 8px;font:inherit}
+  @media(max-width:860px){.gift-bar .lang-m{display:inline-block}}
   /* PRICING */
   .pricing{background:var(--navy);color:#fff;overflow:hidden}
   .pricing h2{color:#fff} .pricing .sub{color:#c9d2e3}
@@ -183,11 +189,11 @@
   footer a{color:#fff;text-decoration:none}
   footer .legal{width:100%;border-top:1px solid rgba(255,255,255,.12);padding-top:18px;margin-top:10px;font-size:.8rem;color:#8b97ad}
 </style>
-<link rel="alternate" hreflang="es" href="https://onlyyourssong.com/"><link rel="alternate" hreflang="en" href="https://onlyyourssong.com/en/"><link rel="canonical" href="https://onlyyourssong.com/">
+<link rel="alternate" hreflang="es" href="https://onlyyourssong.com/"><link rel="alternate" hreflang="en" href="https://onlyyourssong.com/en/"><link rel="alternate" hreflang="fr" href="https://onlyyourssong.com/fr/"><link rel="alternate" hreflang="de" href="https://onlyyourssong.com/de/"><link rel="alternate" hreflang="it" href="https://onlyyourssong.com/it/"><link rel="alternate" hreflang="pt" href="https://onlyyourssong.com/pt/"><link rel="alternate" hreflang="ca" href="https://onlyyourssong.com/ca/"><link rel="alternate" hreflang="x-default" href="https://onlyyourssong.com/en/"><link rel="canonical" href="https://onlyyourssong.com/">
 </head>
 <body>
 
-<div class="gift-bar">¿Te han regalado una tarjeta ONLY YOURS? No tienes que pagar nada: <a href="regalo.html">canjea aquí tu código</a>. &nbsp;·&nbsp; <a href="en/">English</a></div>
+<div class="gift-bar">¿Te han regalado una tarjeta ONLY YOURS? No tienes que pagar nada: <a href="regalo.html">canjea aquí tu código</a>. <span class="lang lang-m"><select aria-label="Idioma" onchange="location.href=this.value"><option value="" selected>Español</option><option value="en/">English</option><option value="fr/">Français</option><option value="de/">Deutsch</option><option value="it/">Italiano</option><option value="pt/">Português</option><option value="ca/">Català</option></select></span></div>
 
 <nav>
   <div class="wrap">
@@ -199,7 +205,7 @@
       <li><a href="#legado">Canción legado</a></li>
       <li><a href="#faq">Preguntas</a></li>
       <li><a href="regalo.html" style="color:var(--coral);font-weight:600">Tengo un código regalo</a></li>
-      <li><a href="en/" title="English">EN</a></li>
+      <li><span class="lang"><select aria-label="Idioma" onchange="location.href=this.value"><option value="" selected>Español</option><option value="en/">English</option><option value="fr/">Français</option><option value="de/">Deutsch</option><option value="it/">Italiano</option><option value="pt/">Português</option><option value="ca/">Català</option></select></span></li>
       <li><a href="#pedido" class="btn btn-primary" style="padding:11px 20px;font-size:.92rem">Encargar mi canción</a></li>
     </ul>
   </div>
@@ -519,7 +525,7 @@ function buildOrder(){
   const form=document.getElementById('orderForm');
   const plan=form.querySelector('input[name=plan]:checked');
   const code='OY-'+Date.now().toString(36).toUpperCase().slice(-6);
-  const o={code,plan:plan.value,price:plan.dataset.price,nombre:v('nombre'),email:v('email'),para:v('para'),ocasion:v('ocasion'),estilo:v('estilo'),voz:v('voz'),idioma:v('idioma'),fecha:v('fecha')||'sin fecha',menciones:v('menciones')||'-',historia:v('historia')};
+  const o={code,plan:plan.value,idx:[...form.querySelectorAll('input[name=plan]')].indexOf(plan),price:plan.dataset.price,nombre:v('nombre'),email:v('email'),para:v('para'),ocasion:v('ocasion'),estilo:v('estilo'),voz:v('voz'),idioma:v('idioma'),fecha:v('fecha')||'sin fecha',menciones:v('menciones')||'-',historia:v('historia')};
   o.txt=`ENCARGO ONLY YOURS · ${code}
 Paquete: ${o.plan} (${o.price} €)
 Nombre: ${o.nombre}
@@ -565,7 +571,7 @@ function loadSdk(){
 }
 function showFallback(o){
   const fb=document.getElementById('payFallback'); fb.style.display='';
-  const pay=document.getElementById('payBtn'); pay.href=PAY_LINKS[o.plan]; pay.textContent=`Pagar ${o.price} € con tarjeta`;
+  const pay=document.getElementById('payBtn'); pay.href=PAY_LINKS[o.plan]||Object.values(PAY_LINKS)[o.idx]; pay.textContent=`Pagar ${o.price} € con tarjeta`;
   document.getElementById('mailBtn').href=`mailto:${CONTACT_MAIL}?subject=${encodeURIComponent('Encargo '+o.code+' · '+o.plan)}&body=${encodeURIComponent(o.txt)}`;
 }
 document.getElementById('orderForm').addEventListener('submit',async e=>{

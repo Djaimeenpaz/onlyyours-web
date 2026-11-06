@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ONLY YOURS — La teva història. La teva cançó.</title>
+<meta name="description" content="Cançons personalitzades amb la teva història. Casaments, aniversaris, mascotes, homenatges, empreses i cançó llegat. Des de 29 €.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0B1A33; --navy-2:#142a52; --coral:#FF6A4D; --coral-d:#e4563b; --coral-l:#FFE4DC; --gold:#E8B04B; --gold-l:#FBEFD6;
+    --cream:#FBF7F2; --ink:#1c2233; --muted:#5f6878; --line:#eadfd3; --white:#fff;
+    --r:20px; --shadow:0 16px 48px rgba(11,26,51,.10);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background:var(--cream);line-height:1.6;overflow-x:hidden}
+  h1,h2,h3{font-family:"Playfair Display",Georgia,serif;color:var(--navy);margin:0 0 .4em;line-height:1.12;font-weight:600}
+  h1{font-size:clamp(2.2rem,5.4vw,3.8rem)} h2{font-size:clamp(1.7rem,3.4vw,2.5rem)} h3{font-size:1.3rem}
+  p{margin:0 0 1em}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 22px}
+  .eyebrow{display:inline-block;font-size:.76rem;letter-spacing:.2em;text-transform:uppercase;color:var(--coral);font-weight:700;margin-bottom:.9em}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:15px 28px;border-radius:999px;font-weight:600;text-decoration:none;border:0;cursor:pointer;font-size:1rem;transition:.18s;font-family:inherit}
+  .btn-primary{background:var(--coral);color:#fff;box-shadow:0 10px 24px rgba(255,106,77,.28)}
+  .btn-primary:hover{background:var(--coral-d);transform:translateY(-2px)}
+  .btn-ghost{background:transparent;color:var(--navy);border:2px solid var(--navy)}
+  .btn-ghost:hover{background:var(--navy);color:#fff}
+  .btn-navy{background:var(--navy);color:#fff}
+  .btn-navy:hover{background:var(--navy-2);transform:translateY(-2px)}
+  .btn-gold{background:var(--gold);color:var(--navy)}
+  .btn-gold:hover{filter:brightness(1.06);transform:translateY(-2px)}
+  .btn-paypal{background:var(--coral);color:#fff;box-shadow:0 10px 24px rgba(255,106,77,.28)}
+  .btn-paypal:hover{background:var(--coral-d);transform:translateY(-2px)}
+
+  .glow{position:absolute;border-radius:50%;filter:blur(60px);opacity:.5;pointer-events:none;z-index:0}
+
+  /* NAV */
+  nav{position:sticky;top:0;z-index:30;background:rgba(251,247,242,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:74px}
+  nav img{height:46px}
+  nav ul{list-style:none;display:flex;gap:26px;margin:0;padding:0;align-items:center}
+  nav li a{color:var(--navy);text-decoration:none;font-weight:500;font-size:.95rem}
+  nav li a:hover{color:var(--coral)}
+  .gift-bar{background:var(--navy);color:#fff;text-align:center;font-size:.92rem;padding:10px 16px}
+  .gift-bar a{color:var(--gold);font-weight:600;text-decoration:none;border-bottom:1px solid var(--gold)}
+  .gift-box{background:var(--navy);color:#fff;border-radius:20px;padding:36px 40px;display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap;margin:0 auto 56px}
+  .gift-box h3{font-family:'Playfair Display',serif;font-size:1.6rem;margin:0 0 6px}
+  .gift-box p{margin:0;opacity:.85;max-width:560px}
+  .gift-box .btn-gold{background:var(--gold);color:var(--navy);border:0}
+  @media(max-width:860px){nav ul{display:none}}
+
+  /* HERO */
+  .hero{position:relative;padding:76px 0 80px;overflow:hidden;
+    background:linear-gradient(165deg,#FFF4EE 0%,#FBF7F2 55%,#F3EEF6 100%)}
+  .hero .wrap{position:relative;z-index:1;display:grid;grid-template-columns:1.1fr .9fr;gap:52px;align-items:center}
+  @media(max-width:880px){.hero .wrap{grid-template-columns:1fr}}
+  .hero img.logo{width:min(520px,100%);margin-bottom:26px}
+  .hero h1 em{font-style:italic;color:var(--coral)}
+  .hero p.lead{font-size:1.18rem;color:var(--muted);max-width:54ch}
+  .hero .cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:24px}
+  .hero .trust{margin-top:30px;display:flex;gap:26px;flex-wrap:wrap;font-size:.9rem;color:var(--muted);font-weight:500}
+  .hero .trust span::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--gold);margin-right:9px;vertical-align:middle}
+  .demo{position:relative;background:var(--navy);color:#fff;border-radius:28px;padding:34px;box-shadow:var(--shadow);overflow:hidden}
+  .demo::after{content:"";position:absolute;right:-80px;bottom:-90px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(255,106,77,.55),transparent 65%)}
+  .demo::before{content:"";position:absolute;left:-60px;top:-60px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(232,176,75,.4),transparent 65%)}
+  .demo > *{position:relative;z-index:1}
+  .demo h3{color:#fff;font-size:1.5rem;font-style:italic;font-weight:500}
+  .demo .wave{display:flex;align-items:flex-end;gap:5px;height:78px;margin:20px 0}
+  .demo .wave i{flex:1;border-radius:4px;background:linear-gradient(180deg,var(--coral),var(--gold));animation:w 1.6s ease-in-out infinite}
+  @keyframes w{0%,100%{transform:scaleY(.3)}50%{transform:scaleY(1)}}
+  .demo small{color:#c9d2e3;display:block}
+  .player{display:flex;align-items:center;gap:16px;margin:18px 0 10px}
+  .playbtn{flex:0 0 58px;width:58px;height:58px;border-radius:50%;border:0;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 10px 24px rgba(255,106,77,.4);transition:.15s}
+  .playbtn:hover{transform:scale(1.06)}
+  .demo .wave{flex:1;margin:0}
+  .demo .wave i{animation-play-state:paused;transform:scaleY(.3)}
+  .demo.playing .wave i{animation-play-state:running}
+  .progress{height:6px;background:rgba(255,255,255,.15);border-radius:999px;cursor:pointer;overflow:hidden}
+  .progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--coral),var(--gold));border-radius:999px}
+  .times{display:flex;justify-content:space-between;font-size:.78rem;color:#c9d2e3;margin-top:6px}
+  .demo .tag{display:inline-block;background:rgba(255,255,255,.12);padding:6px 12px;border-radius:999px;font-size:.78rem;margin:6px 6px 0 0;font-weight:500}
+
+  /* SECTIONS */
+  section{padding:84px 0;position:relative}
+  .center{text-align:center}
+  .sub{color:var(--muted);max-width:60ch;margin:0 auto 46px;font-size:1.06rem}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+  @media(max-width:880px){.grid3,.grid4{grid-template-columns:1fr 1fr}}
+  @media(max-width:560px){.grid3,.grid4{grid-template-columns:1fr}}
+  .card{background:#fff;border-radius:var(--r);padding:30px;box-shadow:0 6px 22px rgba(11,26,51,.05);transition:.2s;border:1px solid var(--line)}
+  .card:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
+  .step .n{font-family:"Playfair Display",serif;font-size:2.6rem;color:var(--gold);line-height:1;margin-bottom:10px}
+
+  /* OCCASIONS */
+  .occ{background:#fff}
+  .occ a.card{text-decoration:none;color:inherit;display:block}
+  .occ .card .mark{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;background:var(--coral-l)}
+  .occ .card .mark svg{width:22px;height:22px;stroke:var(--coral);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .occ .card:nth-child(2n) .mark{background:var(--gold-l)} .occ .card:nth-child(2n) .mark svg{stroke:#b9862a}
+  .occ .card p{color:var(--muted);font-size:.93rem;margin:0}
+
+  .btn{min-width:240px}
+  nav .btn,#copyBtn{min-width:0}
+  .hero .cta .btn{flex:1 1 240px;max-width:300px}
+  .grid4{gap:24px}
+  .card,.plan,.legado .box,.gift-box{padding:32px;border-radius:var(--r)}
+  .plan.featured{transform:none}
+  .gift-box{margin:0}
+  .dj{background:var(--navy);color:#fff}
+  .dj .inner{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+  @media(max-width:880px){.dj .inner{grid-template-columns:1fr}}
+  .dj h2{color:#fff}
+  .dj p{color:#c9d2e3;font-size:1.06rem}
+  .dj .phone{max-width:380px;margin:0 auto;border-radius:32px;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.5);border:6px solid #16284a;background:#000}
+  .dj video{display:block;width:100%;height:auto}
+  .dj .tag{display:inline-block;background:var(--coral);color:#fff;font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;padding:7px 14px;border-radius:999px;font-weight:700;margin-bottom:18px}
+  .lang{position:relative}
+  .lang select{appearance:none;-webkit-appearance:none;background:transparent;border:1.5px solid var(--line);border-radius:999px;padding:8px 30px 8px 14px;font:inherit;font-weight:600;color:var(--navy);cursor:pointer}
+  .lang::after{content:"▾";position:absolute;right:12px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--navy)}
+  .gift-bar .lang-m{display:none;margin-left:10px}
+  .gift-bar .lang-m select{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:4px 8px;font:inherit}
+  @media(max-width:860px){.gift-bar .lang-m{display:inline-block}}
+  /* PRICING */
+  .pricing{background:var(--navy);color:#fff;overflow:hidden}
+  .pricing h2{color:#fff} .pricing .sub{color:#c9d2e3}
+  .plan{background:#fff;color:var(--ink);border-radius:24px;padding:34px 30px;display:flex;flex-direction:column;position:relative}
+  .plan h3{font-size:1.5rem}
+  .plan.featured{outline:3px solid var(--coral);box-shadow:0 24px 60px rgba(0,0,0,.35);transform:translateY(-8px)}
+  .plan .badge{position:absolute;top:-15px;left:50%;transform:translateX(-50%);background:var(--coral);color:#fff;font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;padding:7px 16px;border-radius:999px;font-weight:700;white-space:nowrap}
+  .plan .price{font-family:"Playfair Display",serif;font-size:3rem;color:var(--navy);margin:8px 0 0;line-height:1}
+  .plan .for{color:var(--muted);font-size:.94rem;min-height:3em;margin-top:10px}
+  .plan ul{list-style:none;padding:0;margin:14px 0 26px;flex:1}
+  .plan li{padding:8px 0;border-bottom:1px solid var(--line);font-size:.95rem}
+  .plan li::before{content:"—";color:var(--coral);margin-right:10px;font-weight:700}
+  .plan .btn{width:100%}
+
+  /* LEGADO */
+  .legado{background:linear-gradient(180deg,#F3EEF6 0%,var(--cream) 100%)}
+  .legado .inner{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+  @media(max-width:880px){.legado .inner{grid-template-columns:1fr}}
+  .legado blockquote{font-family:"Playfair Display",serif;font-style:italic;font-size:clamp(1.3rem,2.4vw,1.75rem);color:var(--navy);margin:0 0 24px;line-height:1.4;border-left:4px solid var(--gold);padding-left:22px}
+  .legado .box{background:#fff;border-radius:24px;padding:34px;box-shadow:var(--shadow);border:1px solid var(--line)}
+  .legado .box h3{font-size:1.5rem}
+  .legado .box ul{list-style:none;padding:0;margin:16px 0 22px}
+  .legado .box li{padding:9px 0;border-bottom:1px solid var(--line);font-size:.95rem}
+  .legado .box li::before{content:"—";color:var(--gold);margin-right:10px;font-weight:700}
+  .legado .price{font-family:"Playfair Display",serif;font-size:2.4rem;color:var(--navy);line-height:1}
+  .legado .price small{font-family:Inter;font-size:.9rem;color:var(--muted);font-weight:500}
+
+  /* FORM */
+  .order{background:#fff;border-radius:28px;box-shadow:var(--shadow);padding:44px;max-width:880px;margin:0 auto;position:relative;z-index:1;border:1px solid var(--line)}
+  @media(max-width:600px){.order{padding:26px 18px}}
+  .order .row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:600px){.order .row{grid-template-columns:1fr}}
+  label{display:block;font-weight:600;font-size:.88rem;margin:16px 0 6px;color:var(--navy)}
+  input,select,textarea{width:100%;padding:13px 15px;border:1.5px solid var(--line);border-radius:12px;font:inherit;background:#fff;color:var(--ink)}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--coral);box-shadow:0 0 0 4px rgba(255,106,77,.13)}
+  textarea{min-height:150px;resize:vertical}
+  .pills{display:flex;gap:10px;flex-wrap:wrap}
+  .pills label{margin:0}
+  .pill{display:inline-block;padding:10px 16px;border:1.5px solid var(--line);border-radius:999px;cursor:pointer;font-weight:500;font-size:.92rem;transition:.15s}
+  .pill input{display:none}
+  .pill:has(input:checked){background:var(--navy);color:#fff;border-color:var(--navy)}
+  .hint{font-size:.84rem;color:var(--muted);margin-top:6px}
+  .summary{margin-top:28px;background:var(--cream);border:1px solid var(--line);border-radius:20px;padding:24px;display:none}
+  .summary.show{display:block}
+  .summary pre{white-space:pre-wrap;font-family:inherit;font-size:.92rem;background:#fff;padding:16px;border-radius:14px;max-height:260px;overflow:auto;border:1px solid var(--line)}
+  .summary .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+  .steps-pay{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:10px}
+  @media(max-width:600px){.steps-pay{grid-template-columns:1fr}}
+  .steps-pay div{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;font-size:.88rem}
+  .steps-pay b{display:block;color:var(--coral);margin-bottom:3px}
+  .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--navy);color:#fff;padding:12px 22px;border-radius:999px;opacity:0;transition:.25s;pointer-events:none;font-weight:500;z-index:50}
+  .toast.show{opacity:1;transform:translateX(-50%)}
+
+  /* Preguntes */
+  details{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 20px;margin-bottom:10px}
+  summary{cursor:pointer;font-weight:600;color:var(--navy);list-style:none;display:flex;justify-content:space-between;align-items:center}
+  summary::after{content:"+";color:var(--coral);font-size:1.4rem}
+  details[open] summary::after{content:"–"}
+  details p{margin:12px 0 0;color:var(--muted)}
+
+  /* FOOTER */
+  footer{background:var(--navy);color:#b9c3d6;padding:50px 0 30px;font-size:.9rem}
+  footer .wrap{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;align-items:center}
+  footer img{height:56px;filter:brightness(0) invert(1)}
+  footer a{color:#fff;text-decoration:none}
+  footer .legal{width:100%;border-top:1px solid rgba(255,255,255,.12);padding-top:18px;margin-top:10px;font-size:.8rem;color:#8b97ad}
+</style>
+<link rel="alternate" hreflang="es" href="https://onlyyourssong.com/"><link rel="alternate" hreflang="en" href="https://onlyyourssong.com/en/"><link rel="alternate" hreflang="fr" href="https://onlyyourssong.com/fr/"><link rel="alternate" hreflang="de" href="https://onlyyourssong.com/de/"><link rel="alternate" hreflang="it" href="https://onlyyourssong.com/it/"><link rel="alternate" hreflang="pt" href="https://onlyyourssong.com/pt/"><link rel="alternate" hreflang="ca" href="https://onlyyourssong.com/ca/"><link rel="alternate" hreflang="x-default" href="https://onlyyourssong.com/en/"><link rel="canonical" data-l="1" href="https://onlyyourssong.com/ca/">
+</head>
+<body>
+
+<div class="gift-bar">T'han regalat una targeta ONLY YOURS? No has de pagar res: <a href="../regalo.html">bescanvia aquí el teu codi</a>. <span class="lang lang-m"><select aria-label="Idioma" onchange="location.href=this.value"><option value="../">Español</option><option value="../en/">English</option><option value="../fr/">Français</option><option value="../de/">Deutsch</option><option value="../it/">Italiano</option><option value="../pt/">Português</option><option value="../ca/" selected>Català</option></select></span></div>
+
+<nav>
+  <div class="wrap">
+    <a href="#top"><img src="../logo.png" alt="ONLY YOURS — Your story. Your song."></a>
+    <ul>
+      <li><a href="#como">Com funciona</a></li>
+      <li><a href="#ocasiones">Ocasions</a></li>
+      <li><a href="#paquetes">Preus</a></li>
+      <li><a href="#legado">Cançó llegat</a></li>
+      <li><a href="#faq">Preguntes</a></li>
+      <li><a href="../regalo.html" style="color:var(--coral);font-weight:600">Tinc un codi regal</a></li>
+      <li><span class="lang"><select aria-label="Idioma" onchange="location.href=this.value"><option value="../">Español</option><option value="../en/">English</option><option value="../fr/">Français</option><option value="../de/">Deutsch</option><option value="../it/">Italiano</option><option value="../pt/">Português</option><option value="../ca/" selected>Català</option></select></span></li>
+      <li><a href="#pedido" class="btn btn-primary" style="padding:11px 20px;font-size:.92rem">Encarregar la meva cançó</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="glow" style="width:460px;height:460px;background:var(--coral);top:-160px;right:-120px;opacity:.22"></div>
+  <div class="glow" style="width:380px;height:380px;background:var(--gold);bottom:-180px;left:-120px;opacity:.28"></div>
+  <div class="wrap">
+    <div>
+      <img class="logo" src="../logo.png" alt="ONLY YOURS">
+      <h1>La teva història, convertida en una cançó <em>que només existeix per a vosaltres.</em></h1>
+      <p class="lead">Ens expliques la història: com us vau conèixer, la vida del teu gos amb la família, el que mai has dit a la teva mare, els vint anys de l'empresa. Nosaltres la convertim en una cançó original amb lletra pròpia i vídeo, a punt per al moment que importa.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="#pedido">Encarregar la meva cançó</a>
+        <a class="btn btn-ghost" href="#paquetes">Veure preus · des de 29 €</a>
+      </div>
+      <div class="trust">
+        <span>Lletra escrita amb la teva història</span>
+        <span>Lliurament en 48 h</span>
+        <span>Vídeo amb les teves fotos</span>
+        <span>Pagament segur amb targeta</span>
+      </div>
+    </div>
+    <aside class="demo" aria-label="Escolta la nostra cançó">
+      <small>Escolta com sona</small>
+      <h3>«La teva història, la teva cançó»</h3>
+      <small>Produïda per DJAIMEENPAZ, igual que farem la teva.</small>
+      <div class="player">
+        <button type="button" class="playbtn" id="playBtn" aria-label="Reproduir"><svg id="playIco" viewBox="0 0 24 24" width="26" height="26"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></button>
+        <div class="wave" id="wave" aria-hidden="true">
+          <i style="animation-delay:0s"></i><i style="animation-delay:.1s"></i><i style="animation-delay:.2s"></i><i style="animation-delay:.3s"></i><i style="animation-delay:.4s"></i><i style="animation-delay:.5s"></i><i style="animation-delay:.6s"></i><i style="animation-delay:.7s"></i><i style="animation-delay:.8s"></i><i style="animation-delay:.9s"></i><i style="animation-delay:1s"></i><i style="animation-delay:1.1s"></i><i style="animation-delay:1.2s"></i><i style="animation-delay:1.3s"></i><i style="animation-delay:1.4s"></i>
+        </div>
+      </div>
+      <div class="progress" id="progress"><div class="bar" id="bar"></div></div>
+      <div class="times"><span id="cur">0:00</span><span id="dur">4:17</span></div>
+      <audio id="audio" preload="metadata" src="../tu-historia-tu-cancion.mp3"></audio>
+      <div style="margin-top:12px">
+        <span class="tag">Presentació</span><span class="tag">House melòdic</span><span class="tag">Castellà</span>
+      </div>
+    </aside>
+  </div>
+</header>
+
+<section class="dj" id="djaimeenpaz">
+  <div class="wrap inner">
+    <div class="phone">
+      <video controls playsinline preload="metadata" poster="../djaimeenpaz-poster.jpg">
+        <source src="../djaimeenpaz-trailer.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div>
+      <span class="tag">Coneix DJAIMEENPAZ</span>
+      <h2>Li expliques la teva història. Ell la produeix amb el cor.</h2>
+      <p>DJAIMEENPAZ mai ensenya la cara: només escolta, apunta i produeix, amb el cor. Cada cançó que surt de la seva cabina porta noms, dates, manies i moments que només vosaltres coneixeu. Per això qui la rep s'hi reconeix a cada paraula.</p>
+      <p style="margin-top:14px"><a class="btn btn-primary" href="#pedido">Explica-li la teva història</a></p>
+    </div>
+  </div>
+</section>
+
+<section id="como">
+  <div class="wrap">
+    <div class="center">
+      <span class="eyebrow">Com funciona</span>
+      <h2>Tres passos. Una cançó que no existeix enlloc més.</h2>
+      <p class="sub">Tot per escrit i al teu ritme. Una persona revisa cada lletra abans que l'escoltis.</p>
+    </div>
+    <div class="grid3">
+      <div class="card step"><div class="n">01</div><h3>Explica'ns la història</h3><p>Omples el formulari: per a qui és, l'ocasió, els noms, els moments clau i l'estil musical. Com més concret, més emociona.</p></div>
+      <div class="card step"><div class="n">02</div><h3>Escrivim i produïm</h3><p>Convertim la teva història en una lletra pròpia i la produïm en l'estil escollit. Si vols, aproves la lletra abans de la música.</p></div>
+      <div class="card step"><div class="n">03</div><h3>Reps cançó i vídeo</h3><p>MP3 en alta qualitat, la lletra i, segons el paquet, un vídeo amb les vostres fotos a punt per enviar o projectar.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="occ" id="ocasiones">
+  <div class="wrap">
+    <div class="center">
+      <span class="eyebrow">Ocasions</span>
+      <h2>Per a qui és la teva cançó?</h2>
+      <p class="sub">Tria una ocasió i et portem al formulari.</p>
+    </div>
+    <div class="grid4">
+      <a class="card" href="#pedido" data-ocasion="Casament"><div class="mark"><svg viewBox="0 0 24 24"><circle cx="9" cy="13" r="5"/><circle cx="15" cy="13" r="5"/><path d="M12 4l1.5 3h-3z"/></svg></div><h3>Casaments i peticions</h3><p>El primer ball o la sorpresa del banquet.</p></a>
+      <a class="card" href="#pedido" data-ocasion="La meva mascota"><div class="mark"><svg viewBox="0 0 24 24"><circle cx="7" cy="9" r="2"/><circle cx="17" cy="9" r="2"/><circle cx="11" cy="5" r="2"/><circle cx="13" cy="5" r="2" style="display:none"/><path d="M12 11c-3 0-6 3-6 6a3 3 0 0 0 4 2.8c.7-.3 1.3-.3 2 0A3 3 0 0 0 18 17c0-3-3-6-6-6z"/></svg></div><h3>Mascotes</h3><p>La cançó del teu gos, el teu gat i la família.</p></a>
+      <a class="card" href="#pedido" data-ocasion="Aniversari de parella"><div class="mark"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/></svg></div><h3>Aniversaris de parella</h3><p>Anys junts, explicats en tres minuts.</p></a>
+      <a class="card" href="#pedido" data-ocasion="Aniversaris"><div class="mark"><svg viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M4 15c2 1.5 4-1.5 6 0s4-1.5 6 0 4 0 4 0"/><path d="M12 11V8"/><path d="M12 5c-1 1-1 2 0 3 1-1 1-2 0-3z"/></svg></div><h3>Aniversaris</h3><p>El regal que ningú espera i tothom guarda.</p></a>
+      <a class="card" href="#pedido" data-ocasion="Naixement"><div class="mark"><svg viewBox="0 0 24 24"><path d="M12 3a4 4 0 0 1 4 4v1h-8V7a4 4 0 0 1 4-4z"/><path d="M5 12h14a7 7 0 0 1-14 0z"/><path d="M8 20h8"/></svg></div><h3>Naixements</h3><p>La primera cançó de la seva vida.</p></a>
+      <a class="card" href="#pedido" data-ocasion="Homenatge / comiat"><div class="mark"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.4 6 .8-4.3 4.2 1 5.9L12 16.5 6.7 19.3l1-5.9L3.4 9.2l6-.8z"/></svg></div><h3>Homenatges</h3><p>Per dir el que gairebé mai diem.</p></a>
+      <a class="card" href="#pedido" data-ocasion="Jubilació"><div class="mark"><svg viewBox="0 0 24 24"><path d="M4 20h16"/><path d="M6 20V9a6 6 0 0 1 12 0v11"/><path d="M9 20v-6h6v6"/></svg></div><h3>Jubilacions</h3><p>Tota una carrera, en una cançó.</p></a>
+      <a class="card" href="#pedido" data-ocasion="Esdeveniment d'empresa" data-plan="Esdeveniment / Empresa"><div class="mark"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 12h18"/></svg></div><h3>Empreses</h3><p>Aniversaris, convencions, equips.</p></a>
+    </div>
+  </div>
+</section>
+
+<section class="pricing" id="paquetes">
+  <div class="glow" style="width:420px;height:420px;background:var(--coral);top:-140px;right:-120px;opacity:.25"></div>
+  <div class="glow" style="width:360px;height:360px;background:var(--gold);bottom:-160px;left:-120px;opacity:.2"></div>
+  <div class="wrap" style="position:relative;z-index:1">
+    <div class="center">
+      <span class="eyebrow" style="color:var(--gold)">Preus</span>
+      <h2>Fàcil d'encarregar. Impossible d'oblidar.</h2>
+      <p class="sub">Tot inclòs. Pagues amb targeta en confirmar l'encàrrec i comencem.</p>
+    </div>
+    <div class="grid3" style="align-items:stretch">
+      <div class="plan">
+        <h3>Cançó</h3>
+        <div class="price">29 €</div>
+        <p class="for">Un regal que emociona: aniversari, un dia especial.</p>
+        <ul>
+          <li>Cançó original de 2–3 minuts</li>
+          <li>Lletra escrita amb la teva història</li>
+          <li>1 ronda d'ajustos a la lletra</li>
+          <li>MP3 en alta qualitat + lletra</li>
+          <li>Lliurament en 48 h</li>
+        </ul>
+        <a class="btn btn-ghost" href="#pedido" data-plan="Cançó">Triar Cançó</a>
+      </div>
+      <div class="plan featured">
+        <span class="badge">El més triat</span>
+        <h3>Cançó + Vídeo</h3>
+        <div class="price">49 €</div>
+        <p class="for">Per a casaments, mascotes, peticions i moments que es comparteixen.</p>
+        <ul>
+          <li>Tot el paquet Cançó</li>
+          <li>Vídeo amb les teves fotos (fins a 20) i la lletra</li>
+          <li>Format vertical per a WhatsApp i Instagram</li>
+          <li>2 versions musicals per triar</li>
+          <li>Lliurament en 72 h</li>
+        </ul>
+        <a class="btn btn-primary" href="#pedido" data-plan="Cançó + Vídeo">Triar Cançó + Vídeo</a>
+      </div>
+      <div class="plan">
+        <h3>Esdeveniment / Empresa</h3>
+        <div class="price">149 €</div>
+        <p class="for">Casaments amb públic, homenatges, jubilacions, esdeveniments d'empresa.</p>
+        <ul>
+          <li>Tot el paquet Cançó + Vídeo</li>
+          <li>Vídeo horitzontal a punt per projectar</li>
+          <li>Versió curta per a xarxes (30–60 s)</li>
+          <li>Fins a 3 rondes d'ajustos</li>
+          <li>Lliurament prioritari</li>
+        </ul>
+        <a class="btn btn-gold" href="#pedido" data-plan="Esdeveniment / Empresa">Triar Esdeveniment / Empresa</a>
+      </div>
+    </div>
+    <p class="center" style="margin-top:30px;color:#c9d2e3">Diverses cançons (wedding planner, finca, hotel, empresa)? Indica-ho al formulari i et fem preu de pack.</p>
+  </div>
+</section>
+
+<section class="legado" id="legado">
+  <div class="wrap">
+    <div class="inner">
+      <div>
+        <span class="eyebrow">Cançó llegat</span>
+        <h2>El que voldries que escoltessin quan ja no hi siguis.</h2>
+        <blockquote>Hi ha coses que no es diuen en vida. Una cançó pot dir-les per tu, amb les teves paraules, el dia que faci falta.</blockquote>
+        <p style="color:var(--muted)">La Cançó llegat és un missatge per als teus escrit amb tu, amb calma i per escrit: el que senties, el que t'hauria agradat dir, el que vols que recordin. La produïm amb una cura especial i la lliurem tancada a la persona que triïs, amb instruccions de quan obrir-la: al comiat, en un aniversari o quan aquesta persona la necessiti.</p>
+        <p style="color:var(--muted)">Si ho vols, hi incloem la teva pròpia veu: una frase, una dedicatòria o un fragment gravat des del mòbil que passa a formar part de la cançó.</p>
+        <p class="hint">També per a famílies que volen recollir la història d'una mare, un pare o un avi mentre encara la pot explicar.</p>
+      </div>
+      <div class="box">
+        <h3>Cançó llegat</h3>
+        <div class="price">89 € <small>tot inclòs</small></div>
+        <ul>
+          <li>Qüestionari guiat per escrit, sense presses</li>
+          <li>Lletra treballada amb tu fins que digui el que vols</li>
+          <li>Possibilitat d'incloure la teva veu gravada</li>
+          <li>Cançó en alta qualitat + vídeo amb les teves fotos</li>
+          <li>Lliurament segellat a la persona que triïs, amb les teves instruccions</li>
+          <li>Termini garantit: 7 dies, o abans si cal</li>
+        </ul>
+        <a class="btn btn-navy" href="#pedido" data-plan="Cançó llegat" data-ocasion="Cançó llegat">Encarregar una Cançó llegat</a>
+        <p class="hint" style="margin-top:14px">Tractem cada encàrrec amb absoluta discreció. Ningú més que tu i la persona que triïs sabrà que existeix.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="gift-box" id="regalo">
+      <div>
+        <h3>Tens una targeta regal amb codi?</h3>
+        <p>Si un comerç, una floristeria, una veterinària o una funerària t'ha regalat una targeta ONLY YOURS, la teva cançó ja està pagada. Oblida els preus de dalt: introdueix el codi, explica'ns la història i la reps en 72 h.</p>
+      </div>
+      <a class="btn btn-gold" href="../regalo.html">Bescanviar el meu codi</a>
+    </div>
+  </div>
+</section>
+
+<section id="pedido" style="background:#fff">
+  <div class="wrap">
+    <div class="center">
+      <span class="eyebrow">Encàrrec</span>
+      <h2>Explica'ns la teva història</h2>
+      <p class="sub">Dos minuts. En acabar, pagues amb targeta o PayPal i el teu encàrrec ens arriba a l'instant. Comencem el mateix dia.</p>
+    </div>
+
+    <form class="order" id="orderForm" novalidate>
+      <label>Paquet</label>
+      <div class="pills">
+        <label class="pill"><input type="radio" name="plan" value="Cançó" data-price="29"> Cançó · 29 €</label>
+        <label class="pill"><input type="radio" name="plan" value="Cançó + Vídeo" data-price="49" checked> Cançó + Vídeo · 49 €</label>
+        <label class="pill"><input type="radio" name="plan" value="Esdeveniment / Empresa" data-price="149"> Esdeveniment / Empresa · 149 €</label>
+        <label class="pill"><input type="radio" name="plan" value="Cançó llegat" data-price="89"> Cançó llegat · 89 €</label>
+      </div>
+
+      <div class="row">
+        <div><label for="nombre">El teu nom</label><input id="nombre" name="nombre" required placeholder="Qui encarrega la cançó"></div>
+        <div><label for="email">El teu correu</label><input id="email" name="email" type="email" required placeholder="On t'enviem la cançó"></div>
+      </div>
+      <div class="row">
+        <div><label for="para">Per a qui és</label><input id="para" name="para" required placeholder="Nom(s) de qui la rep (o de la mascota)"></div>
+        <div><label for="ocasion">Ocasió</label>
+          <select id="ocasion" name="ocasion">
+            <option>Casament</option><option>Petició de mà</option><option>Aniversari de parella</option><option>Aniversaris</option><option>Naixement</option><option>La meva mascota</option><option>Comiat d'una mascota</option><option>Homenatge / comiat</option><option>Jubilació</option><option>Esdeveniment d'empresa</option><option>Cançó llegat</option><option>Altra</option>
+          </select></div>
+      </div>
+      <div class="row">
+        <div><label for="estilo">Estil musical</label>
+          <select id="estilo" name="estilo">
+            <option>Balada pop</option><option>Pop alegre</option><option>Acústic / guitarra</option><option>Piano i veu</option><option>Rumba / flamenc pop</option><option>Rock</option><option>Indie</option><option>Electrònic</option><option>Jazz / swing</option><option>Reggaeton / urbà</option><option>Infantil</option><option>Ho deixo a les vostres mans</option>
+          </select></div>
+        <div><label for="voz">Veu</label>
+          <select id="voz" name="voz"><option>Femenina</option><option>Masculina</option><option>Duet</option><option>Indiferent</option></select></div>
+      </div>
+      <div class="row">
+        <div><label for="idioma">Idioma de la lletra</label>
+          <select id="idioma" name="idioma"><option>Castellà</option><option>Català</option><option>English</option><option>Français</option><option>Português</option><option>Altra</option></select></div>
+        <div><label for="fecha">Per a quina data la necessites?</label><input id="fecha" name="fecha" type="date"></div>
+      </div>
+
+      <label for="historia">La història</label>
+      <textarea id="historia" name="historia" required placeholder="Com us vau conèixer, què us fa únics, anècdotes, llocs, frases que dieu sempre, el que vols que senti en escoltar-la… Si és per a una mascota: com va arribar a casa, les seves manies, el seu racó. Si és una Cançó llegat: a qui va dirigida, què vols que sàpiga i quan l'hauria d'escoltar."></textarea>
+      <p class="hint">Tres o quatre detalls concrets (un lloc, una frase, una data) emocionen més que deu adjectius.</p>
+
+      <label for="menciones">Noms, dates o paraules que han d'aparèixer sí o sí</label>
+      <input id="menciones" name="menciones" placeholder="Ex.: Marta i Joan · 14 de juny · «Cadaqués» · «el nostre per sempre»">
+
+      <div style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap">
+        <button type="submit" class="btn btn-primary">Preparar el meu encàrrec</button>
+      </div>
+
+      <div class="summary" id="summary">
+        <h3 style="margin-top:0">Últim pas: confirma i paga</h3>
+        <p class="hint" style="margin:0 0 14px">En completar el pagament, el teu encàrrec ens arriba automàticament amb la teva història i rebràs confirmació al teu correu. Pagament segur amb targeta o PayPal.</p>
+        <div id="orderCode" class="hint" style="font-weight:700;color:var(--navy);margin-bottom:10px"></div>
+        <div id="paypal-buttons" style="max-width:420px"></div>
+        <div id="payFallback" style="display:none;margin-top:10px">
+          <a class="btn btn-paypal" id="payBtn" href="#" target="_blank" rel="noopener">Pagar amb targeta</a>
+          <p class="hint">Després del pagament, envia'ns la història: <a id="mailBtn" href="#">per correu</a> o <button type="button" class="btn btn-ghost" id="copyBtn" style="padding:8px 14px;font-size:.85rem">copiar resum</button></p>
+        </div>
+        <div id="payStatus" class="hint" style="margin-top:10px"></div>
+        <details style="margin-top:14px"><summary>Veure resum de l'encàrrec</summary><pre id="summaryText"></pre></details>
+      </div>
+      <div class="summary" id="thanks" style="display:none">
+        <h3 style="margin-top:0">Comanda rebuda!</h3>
+        <p>Gràcies. Ja tenim la teva història i el pagament confirmat. T'escriurem a <strong id="thanksMail"></strong> en menys de 24 h amb la confirmació i la data de lliurament.</p>
+        <p class="hint">Referència: <span id="thanksRef"></span></p>
+        <p class="hint" id="thanksNote"></p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap" style="max-width:820px">
+    <div class="center"><span class="eyebrow">Preguntes</span><h2>El que ens solen preguntar</h2></div>
+    <details><summary>La cançó és realment original?</summary><p>Sí. La lletra s'escriu a partir de la teva història i la música es produeix per a aquest encàrrec. No reutilitzem lletres ni cançons entre clients.</p></details>
+    <details><summary>Com es crea la música?</summary><p>Combinem escriptura i direcció creativa humanes amb eines de producció musical amb intel·ligència artificial. Una persona revisa cada lletra i cada mescla abans de lliurar-la. Per això podem ser ràpids i assequibles sense sonar a plantilla.</p></details>
+    <details><summary>Puc demanar canvis?</summary><p>Sí. Cada paquet inclou rondes d'ajustos a la lletra. Volem que la cançó digui exactament el que tu vols dir.</p></details>
+    <details><summary>Quant triga?</summary><p>Cançó, 48 h des que rebem pagament i història; Cançó + Vídeo, 72 h; Esdeveniment/Empresa, lliurament prioritari segons la data; Cançó llegat, 7 dies o abans si cal. Si tens urgència, indica-ho.</p></details>
+    <details><summary>Què passa amb una Cançó llegat si no vull que ningú l'escolti encara?</summary><p>La lliurem únicament a la persona que indiquis, amb les teves instruccions de quan obrir-la, i no la publiquem ni la fem servir com a exemple. Discreció absoluta.</p></details>
+    <details><summary>Puc fer-la servir a xarxes, al casament o en un esdeveniment?</summary><p>Sí, per a ús personal i a l'esdeveniment per al qual s'encarrega. Per a usos comercials o publicitaris, consulta'ns.</p></details>
+    <details><summary>Com pago?</summary><p>Amb targeta de crèdit o dèbit (Visa, Mastercard, Amex) en una passarel·la segura; no cal tenir compte de PayPal, tot i que també es pot fer servir. No emmagatzemem dades de pagament.</p></details>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <img src="../logo.png" alt="ONLY YOURS">
+    <div>
+      <strong style="color:#fff;font-family:'Playfair Display',serif;font-size:1.1rem;font-style:italic">Your story. Your song.</strong><br>
+      <a id="footMail" href="#"></a>
+    </div>
+    <div class="legal">© <span id="year"></span> ONLY YOURS · Andorra · Les cançons es produeixen amb direcció creativa humana i eines d'intel·ligència artificial.</div>
+  </div>
+</footer>
+
+<div class="toast" id="toast">Resum copiat</div>
+
+<script>
+/* ===== CONFIGURACIÓN ===== */
+const PAYPAL_CLIENT_ID = "BAAW-4WlnvAsV6y4FjGDTAb076uEklQUt7hsa51WimCYUKstPgnoSHzm8x34QZFnp0mLzLIyzs9d3cXEOw";
+const WEB3FORMS_KEY    = "";                          // clave de web3forms.com (envío automático del pedido)
+const CONTACT_MAIL     = "hola.onlyyours@gmail.com";
+const PAY_LINKS        = {
+  "Canción":"https://www.paypal.com/ncp/payment/48ZNSAHJBMBB6",
+  "Canción + Vídeo":"https://www.paypal.com/ncp/payment/4PNBT5LQB5PZU",
+  "Evento / Empresa":"https://www.paypal.com/ncp/payment/GH5CV2UCGV5PQ",
+  "Canción legado":"https://www.paypal.com/ncp/payment/YWWQQD795V72J",
+  "Song":"https://www.paypal.com/ncp/payment/48ZNSAHJBMBB6",
+  "Song + Video":"https://www.paypal.com/ncp/payment/4PNBT5LQB5PZU",
+  "Event / Business":"https://www.paypal.com/ncp/payment/GH5CV2UCGV5PQ",
+  "Legacy Song":"https://www.paypal.com/ncp/payment/YWWQQD795V72J"
+};
+/* ========================= */
+
+document.getElementById('year').textContent=new Date().getFullYear();
+const fm=document.getElementById('footMail'); fm.textContent=CONTACT_MAIL; fm.href="mailto:"+CONTACT_MAIL;
+
+document.querySelectorAll('[data-plan],[data-ocasion]').forEach(a=>a.addEventListener('click',()=>{
+  if(a.dataset.plan){const r=document.querySelector(`input[name=plan][value="${a.dataset.plan}"]`); if(r) r.checked=true;}
+  if(a.dataset.ocasion){document.getElementById('ocasion').value=a.dataset.ocasion;}
+}));
+
+let ORDER=null, sdkLoading=null;
+const v=id=>document.getElementById(id).value.trim();
+function buildOrder(){
+  const form=document.getElementById('orderForm');
+  const plan=form.querySelector('input[name=plan]:checked');
+  const code='OY-'+Date.now().toString(36).toUpperCase().slice(-6);
+  const o={code,plan:plan.value,idx:[...form.querySelectorAll('input[name=plan]')].indexOf(plan),price:plan.dataset.price,nombre:v('nombre'),email:v('email'),para:v('para'),ocasion:v('ocasion'),estilo:v('estilo'),voz:v('voz'),idioma:v('idioma'),fecha:v('fecha')||'sin fecha',menciones:v('menciones')||'-',historia:v('historia')};
+  o.txt=`ENCARGO ONLY YOURS · ${code}
+Paquete: ${o.plan} (${o.price} €)
+Nombre: ${o.nombre}
+Correo: ${o.email}
+Para: ${o.para}
+Ocasión: ${o.ocasion}
+Estilo: ${o.estilo} · Voz: ${o.voz} · Idioma: ${o.idioma}
+Fecha límite: ${o.fecha}
+Debe aparecer: ${o.menciones}
+
+HISTORIA:
+${o.historia}`;
+  return o;
+}
+async function sendOrder(o,extra){
+  const subject=`ENCARGO ${o.code} · ${o.plan} · ${o.para}${extra&&extra.paid?' · PAGADO':' · pendiente de pago'}`;
+  const estado=extra?JSON.stringify(extra):'pendiente de pago';
+  // 1) FormSubmit (sin clave; destino CONTACT_MAIL)
+  try{
+    const r=await fetch('https://formsubmit.co/ajax/'+CONTACT_MAIL,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({
+      _subject:subject, _template:'box', _replyto:o.email, nombre:o.nombre, email:o.email, pedido:o.txt, estado:estado
+    })});
+    const j=await r.json(); if(j && (j.success==='true'||j.success===true)) return true;
+  }catch(e){}
+  // 2) Web3Forms si hay clave
+  if(WEB3FORMS_KEY){ try{
+    const r=await fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({
+      access_key:WEB3FORMS_KEY, subject, from_name:'ONLY YOURS web', replyto:o.email, pedido:o.txt, estado
+    })});
+    const j=await r.json(); if(j.success) return true;
+  }catch(e){} }
+  return false;
+}
+function loadSdk(){
+  if(sdkLoading) return sdkLoading;
+  sdkLoading=new Promise((res,rej)=>{
+    if(window.paypal) return res();
+    const s=document.createElement('script');
+    s.src=`https://www.paypal.com/sdk/js?client-id=${PAYPAL_CLIENT_ID}&currency=EUR&intent=capture&locale=en_US&disable-funding=paylater`;
+    s.onload=()=>res(); s.onerror=()=>rej(new Error('sdk')); document.head.appendChild(s);
+  });
+  return sdkLoading;
+}
+function showFallback(o){
+  const fb=document.getElementById('payFallback'); fb.style.display='';
+  const pay=document.getElementById('payBtn'); pay.href=PAY_LINKS[o.plan]||Object.values(PAY_LINKS)[o.idx]; pay.textContent=`Pay €${o.price} by card`;
+  document.getElementById('mailBtn').href=`mailto:${CONTACT_MAIL}?subject=${encodeURIComponent('Encargo '+o.code+' · '+o.plan)}&body=${encodeURIComponent(o.txt)}`;
+}
+document.getElementById('orderForm').addEventListener('submit',async e=>{
+  e.preventDefault();
+  for(const id of ['nombre','email','para','historia']){const el=document.getElementById(id); if(!el.value.trim()){el.focus(); el.style.borderColor='#e4563b'; return;} el.style.borderColor='';}
+  ORDER=buildOrder();
+  document.getElementById('summaryText').textContent=ORDER.txt;
+  document.getElementById('orderCode').textContent=`Order ${ORDER.code} · ${ORDER.plan} · €${ORDER.price}`;
+  const s=document.getElementById('summary'); s.classList.add('show'); s.scrollIntoView({behavior:'smooth',block:'start'});
+  const st=document.getElementById('payStatus'); st.textContent='Saving your story…';
+  sendOrder(ORDER,null).then(ok=>{ st.textContent= ok ? 'Story saved. Complete the payment to confirm your order.' : 'Complete the payment; we may ask you to confirm the story by email afterwards.'; });
+  const box=document.getElementById('paypal-buttons'); box.innerHTML='';
+  try{
+    await loadSdk();
+    paypal.Buttons({
+      style:{layout:'vertical',color:'gold',shape:'pill',label:'pay'},
+      createOrder:(data,actions)=>actions.order.create({purchase_units:[{amount:{currency_code:'EUR',value:String(ORDER.price)},description:`ONLY YOURS – ${ORDER.plan} – ${ORDER.para}`.slice(0,127),custom_id:ORDER.code}]}),
+      onApprove:async(data,actions)=>{
+        st.textContent='Confirming payment…';
+        let cap=null; try{ cap=await actions.order.capture(); }catch(err){ cap=null; }
+        const capt=cap&&cap.purchase_units&&cap.purchase_units[0].payments&&cap.purchase_units[0].payments.captures&&cap.purchase_units[0].payments.captures[0];
+        const okPay = !!(capt && (capt.status==='COMPLETED'||capt.status==='PENDING')) || (cap&&cap.status==='COMPLETED');
+        const txid=(capt&&capt.id)||data.orderID;
+        if(!okPay){
+          st.innerHTML='The payment could not be confirmed. You have not been charged, or the charge is under review. Try again or email us at <a href="mailto:'+CONTACT_MAIL+'">'+CONTACT_MAIL+'</a> quoting reference '+ORDER.code+'.';
+          showFallback(ORDER); return;
+        }
+        const sent=await sendOrder(ORDER,{paid:true,paypal_order:data.orderID,transaccion:txid,importe:ORDER.price+' €',estado_pago:capt?capt.status:'COMPLETED'});
+        document.getElementById('summary').style.display='none';
+        const t=document.getElementById('thanks'); t.style.display='block';
+        document.getElementById('thanksMail').textContent=ORDER.email;
+        document.getElementById('thanksRef').textContent=ORDER.code+' · '+txid;
+        if(!sent){ document.getElementById('thanksNote').innerHTML='To be safe, also send us your story by clicking here: <a href="mailto:'+CONTACT_MAIL+'?subject='+encodeURIComponent('Order '+ORDER.code+' · PAID '+txid)+'&body='+encodeURIComponent(ORDER.txt)+'">send story by email</a>.'; }
+        t.scrollIntoView({behavior:'smooth',block:'start'});
+      },
+      onError:()=>{ showFallback(ORDER); st.textContent='The built-in payment could not load. Use the alternative payment button.'; }
+    }).render('#paypal-buttons');
+  }catch(err){ showFallback(ORDER); }
+});
+document.getElementById('copyBtn').addEventListener('click',async()=>{
+  const t=document.getElementById('summaryText').textContent;
+  try{await navigator.clipboard.writeText(t); toast('Summary copied.');}catch(_){toast('Select the summary and copy it with Cmd/Ctrl+C');}
+});
+function toast(m){const t=document.getElementById('toast'); t.textContent=m; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2600);}
+// reproductor
+(function(){const a=document.getElementById('audio'),b=document.getElementById('playBtn'),d=document.querySelector('.demo'),bar=document.getElementById('bar'),pr=document.getElementById('progress'),cur=document.getElementById('cur'),dur=document.getElementById('dur'),ico=document.getElementById('playIco');
+ if(!a) return; const fmt=s=>{s=Math.floor(s||0);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');};
+ const setIco=p=>{ico.innerHTML=p?'<rect x="6" y="5" width="4" height="14" fill="currentColor"/><rect x="14" y="5" width="4" height="14" fill="currentColor"/>':'<path d="M8 5v14l11-7z" fill="currentColor"/>';};
+ b.addEventListener('click',async()=>{try{ if(a.paused){await a.play();} else {a.pause();} }catch(e){}});
+ a.addEventListener('play',()=>{d.classList.add('playing');setIco(true);});
+ a.addEventListener('pause',()=>{d.classList.remove('playing');setIco(false);});
+ a.addEventListener('ended',()=>{d.classList.remove('playing');setIco(false);bar.style.width='0';});
+ a.addEventListener('loadedmetadata',()=>{dur.textContent=fmt(a.duration);});
+ a.addEventListener('timeupdate',()=>{cur.textContent=fmt(a.currentTime); if(a.duration) bar.style.width=(a.currentTime/a.duration*100)+'%';});
+ pr.addEventListener('click',e=>{const r=pr.getBoundingClientRect(); if(a.duration) a.currentTime=(e.clientX-r.left)/r.width*a.duration;});
+})();
+</script>
+</body>
+</html>
