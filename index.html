@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ONLY YOURS — Tu historia. Tu canción.</title>
-<meta name="description" content="Canciones personalizadas con tu historia. Bodas, aniversarios, mascotas, homenajes, empresas y canción legado. Desde 39 €.">
+<meta name="description" content="Canciones personalizadas con tu historia. Bodas, aniversarios, mascotas, homenajes, empresas y canción legado. Desde 29 €.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -101,6 +101,13 @@
   .occ .card:nth-child(2n) .mark{background:var(--gold-l)} .occ .card:nth-child(2n) .mark svg{stroke:#b9862a}
   .occ .card p{color:var(--muted);font-size:.93rem;margin:0}
 
+  .btn{min-width:240px}
+  nav .btn,#copyBtn{min-width:0}
+  .hero .cta .btn{flex:1 1 240px;max-width:300px}
+  .grid4{gap:24px}
+  .card,.plan,.legado .box,.gift-box{padding:32px;border-radius:var(--r)}
+  .plan.featured{transform:none}
+  .gift-box{margin:0}
   /* PRICING */
   .pricing{background:var(--navy);color:#fff;overflow:hidden}
   .pricing h2{color:#fff} .pricing .sub{color:#c9d2e3}
@@ -198,7 +205,7 @@
       <p class="lead">Nos cuentas la historia: cómo os conocisteis, la vida de tu perro con la familia, lo que nunca le has dicho a tu madre, los veinte años de la empresa. Nosotros la convertimos en una canción original con letra propia y vídeo, lista para el momento que importa.</p>
       <div class="cta">
         <a class="btn btn-primary" href="#pedido">Encargar mi canción</a>
-        <a class="btn btn-ghost" href="#paquetes">Ver precios · desde 39 €</a>
+        <a class="btn btn-ghost" href="#paquetes">Ver precios · desde 29 €</a>
       </div>
       <div class="trust">
         <span>Letra escrita con tu historia</span>
@@ -274,7 +281,7 @@
     <div class="grid3" style="align-items:stretch">
       <div class="plan">
         <h3>Canción</h3>
-        <div class="price">39 €</div>
+        <div class="price">29 €</div>
         <p class="for">Un regalo que emociona: cumpleaños, aniversario, un día especial.</p>
         <ul>
           <li>Canción original de 2–3 minutos</li>
@@ -288,7 +295,7 @@
       <div class="plan featured">
         <span class="badge">El más elegido</span>
         <h3>Canción + Vídeo</h3>
-        <div class="price">89 €</div>
+        <div class="price">59 €</div>
         <p class="for">Para bodas, mascotas, pedidas y momentos que se comparten.</p>
         <ul>
           <li>Todo lo del paquete Canción</li>
@@ -301,7 +308,7 @@
       </div>
       <div class="plan">
         <h3>Evento / Empresa</h3>
-        <div class="price">199 €</div>
+        <div class="price">149 €</div>
         <p class="for">Bodas con público, homenajes, jubilaciones, eventos de empresa.</p>
         <ul>
           <li>Todo lo del paquete Canción + Vídeo</li>
@@ -330,7 +337,7 @@
       </div>
       <div class="box">
         <h3>Canción legado</h3>
-        <div class="price">149 € <small>todo incluido</small></div>
+        <div class="price">99 € <small>todo incluido</small></div>
         <ul>
           <li>Cuestionario guiado por escrito, sin prisas</li>
           <li>Letra trabajada contigo hasta que diga lo que quieres</li>
@@ -346,7 +353,7 @@
   </div>
 </section>
 
-<section style="padding-top:0">
+<section>
   <div class="wrap">
     <div class="gift-box" id="regalo">
       <div>
@@ -369,10 +376,10 @@
     <form class="order" id="orderForm" novalidate>
       <label>Paquete</label>
       <div class="pills">
-        <label class="pill"><input type="radio" name="plan" value="Canción" data-price="39"> Canción · 39 €</label>
-        <label class="pill"><input type="radio" name="plan" value="Canción + Vídeo" data-price="89" checked> Canción + Vídeo · 89 €</label>
-        <label class="pill"><input type="radio" name="plan" value="Evento / Empresa" data-price="199"> Evento / Empresa · 199 €</label>
-        <label class="pill"><input type="radio" name="plan" value="Canción legado" data-price="149"> Canción legado · 149 €</label>
+        <label class="pill"><input type="radio" name="plan" value="Canción" data-price="29"> Canción · 29 €</label>
+        <label class="pill"><input type="radio" name="plan" value="Canción + Vídeo" data-price="59" checked> Canción + Vídeo · 59 €</label>
+        <label class="pill"><input type="radio" name="plan" value="Evento / Empresa" data-price="149"> Evento / Empresa · 149 €</label>
+        <label class="pill"><input type="radio" name="plan" value="Canción legado" data-price="99"> Canción legado · 99 €</label>
       </div>
 
       <div class="row">
