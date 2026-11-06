@@ -342,7 +342,7 @@
     <div class="center">
       <span class="eyebrow">Encargo</span>
       <h2>Cuéntanos tu historia</h2>
-      <p class="sub">Dos minutos. Al terminar, pagas con tarjeta y nos envías la historia. Empezamos en cuanto recibimos las dos cosas.</p>
+      <p class="sub">Dos minutos. Al terminar, pagas con tarjeta o PayPal y tu encargo nos llega al instante. Empezamos ese mismo día.</p>
     </div>
 
     <form class="order" id="orderForm" novalidate>
@@ -391,20 +391,21 @@
       </div>
 
       <div class="summary" id="summary">
-        <h3 style="margin-top:0">Último paso: pago y envío de la historia</h3>
-        <div class="steps-pay">
-          <div><b>1 · Paga con tarjeta</b>Visa, Mastercard o Amex, sin registrarte. También PayPal si lo prefieres. Guarda el justificante.</div>
-          <div><b>2 · Envíanos la historia</b>Con el botón de correo o WhatsApp (o copia el resumen).</div>
-          <div><b>3 · Empezamos</b>Te confirmamos la recepción y la fecha de entrega.</div>
-        </div>
-        <div class="actions">
+        <h3 style="margin-top:0">Último paso: confirma y paga</h3>
+        <p class="hint" style="margin:0 0 14px">Al completar el pago, tu encargo nos llega automáticamente con tu historia y recibirás confirmación en tu correo. Pago seguro con tarjeta o PayPal.</p>
+        <div id="orderCode" class="hint" style="font-weight:700;color:var(--navy);margin-bottom:10px"></div>
+        <div id="paypal-buttons" style="max-width:420px"></div>
+        <div id="payFallback" style="display:none;margin-top:10px">
           <a class="btn btn-paypal" id="payBtn" href="#" target="_blank" rel="noopener">Pagar con tarjeta</a>
-          <a class="btn btn-navy" id="mailBtn" href="#">Enviar por correo</a>
-          <a class="btn btn-gold" id="waBtn" href="#" target="_blank" rel="noopener">Enviar por WhatsApp</a>
-          <button type="button" class="btn btn-ghost" id="copyBtn">Copiar resumen</button>
+          <p class="hint">Después del pago, envíanos la historia: <a id="mailBtn" href="#">por correo</a> o <button type="button" class="btn btn-ghost" id="copyBtn" style="padding:8px 14px;font-size:.85rem">copiar resumen</button></p>
         </div>
-        <p class="hint" style="margin-top:12px">Si el botón de correo no se abre, escribe a <strong id="mailText"></strong> y pega el resumen.</p>
-        <pre id="summaryText"></pre>
+        <div id="payStatus" class="hint" style="margin-top:10px"></div>
+        <details style="margin-top:14px"><summary>Ver resumen del encargo</summary><pre id="summaryText"></pre></details>
+      </div>
+      <div class="summary" id="thanks" style="display:none">
+        <h3 style="margin-top:0">¡Pedido recibido!</h3>
+        <p>Gracias. Ya tenemos tu historia y el pago confirmado. Te escribiremos a <strong id="thanksMail"></strong> en menos de 24 h con la confirmación y la fecha de entrega.</p>
+        <p class="hint">Referencia: <span id="thanksRef"></span></p>
       </div>
     </form>
   </div>
@@ -437,20 +438,19 @@
 <div class="toast" id="toast">Resumen copiado</div>
 
 <script>
-/* ===== CONFIGURACIÓN — cambiar estos valores ===== */
-const PAYPAL_ME    = "ONLYYOURS";             // usuario de PayPal.me → paypal.me/USUARIO/39EUR
-const CONTACT_MAIL = "hola.onlyyours@gmail.com";  // correo donde llegan los encargos
-const WHATSAPP     = "";                       // número con prefijo, sin "+", ej. 376600000. Vacío = ocultar botón
-const PAY_LINKS    = {
+/* ===== CONFIGURACIÓN ===== */
+const PAYPAL_CLIENT_ID = "BAAW-4WlnvAsV6y4FjGDTAb076uEklQUt7hsa51WimCYUKstPgnoSHzm8x34QZFnp0mLzLIyzs9d3cXEOw";
+const WEB3FORMS_KEY    = "";                          // clave de web3forms.com (envío automático del pedido)
+const CONTACT_MAIL     = "hola.onlyyours@gmail.com";
+const PAY_LINKS        = {
   "Canción":"https://www.paypal.com/ncp/payment/48ZNSAHJBMBB6",
   "Canción + Vídeo":"https://www.paypal.com/ncp/payment/4PNBT5LQB5PZU",
   "Evento / Empresa":"https://www.paypal.com/ncp/payment/GH5CV2UCGV5PQ",
   "Canción legado":"https://www.paypal.com/ncp/payment/YWWQQD795V72J"
 };
-/* ================================================= */
+/* ========================= */
 
 document.getElementById('year').textContent=new Date().getFullYear();
-document.getElementById('mailText').textContent=CONTACT_MAIL;
 const fm=document.getElementById('footMail'); fm.textContent=CONTACT_MAIL; fm.href="mailto:"+CONTACT_MAIL;
 
 document.querySelectorAll('[data-plan],[data-ocasion]').forEach(a=>a.addEventListener('click',()=>{
@@ -458,39 +458,87 @@ document.querySelectorAll('[data-plan],[data-ocasion]').forEach(a=>a.addEventLis
   if(a.dataset.ocasion){document.getElementById('ocasion').value=a.dataset.ocasion;}
 }));
 
-const form=document.getElementById('orderForm');
-form.addEventListener('submit',e=>{
-  e.preventDefault();
-  for(const id of ['nombre','email','para','historia']){const el=document.getElementById(id); if(!el.value.trim()){el.focus(); el.style.borderColor='#e4563b'; return;} el.style.borderColor='';}
-  const plan=form.querySelector('input[name=plan]:checked'); const price=plan.dataset.price;
-  const v=id=>document.getElementById(id).value.trim();
-  const txt=`ENCARGO ONLY YOURS
-Paquete: ${plan.value} (${price} €)
-Nombre: ${v('nombre')}
-Correo: ${v('email')}
-Para: ${v('para')}
-Ocasión: ${v('ocasion')}
-Estilo: ${v('estilo')} · Voz: ${v('voz')} · Idioma: ${v('idioma')}
-Fecha límite: ${v('fecha')||'sin fecha'}
-Debe aparecer: ${v('menciones')||'-'}
+let ORDER=null, sdkLoading=null;
+const v=id=>document.getElementById(id).value.trim();
+function buildOrder(){
+  const form=document.getElementById('orderForm');
+  const plan=form.querySelector('input[name=plan]:checked');
+  const code='OY-'+Date.now().toString(36).toUpperCase().slice(-6);
+  const o={code,plan:plan.value,price:plan.dataset.price,nombre:v('nombre'),email:v('email'),para:v('para'),ocasion:v('ocasion'),estilo:v('estilo'),voz:v('voz'),idioma:v('idioma'),fecha:v('fecha')||'sin fecha',menciones:v('menciones')||'-',historia:v('historia')};
+  o.txt=`ENCARGO ONLY YOURS · ${code}
+Paquete: ${o.plan} (${o.price} €)
+Nombre: ${o.nombre}
+Correo: ${o.email}
+Para: ${o.para}
+Ocasión: ${o.ocasion}
+Estilo: ${o.estilo} · Voz: ${o.voz} · Idioma: ${o.idioma}
+Fecha límite: ${o.fecha}
+Debe aparecer: ${o.menciones}
 
 HISTORIA:
-${v('historia')}`;
-  document.getElementById('summaryText').textContent=txt;
-  const pay=document.getElementById('payBtn');
-  pay.href=PAY_LINKS[plan.value]||`https://www.paypal.me/${PAYPAL_ME}/${price}EUR`;
-  pay.textContent=`Pagar ${price} € con tarjeta`;
-  const subject=encodeURIComponent(`Encargo ONLY YOURS · ${plan.value} · ${v('para')}`);
-  document.getElementById('mailBtn').href=`mailto:${CONTACT_MAIL}?subject=${subject}&body=${encodeURIComponent(txt)}`;
-  const wa=document.getElementById('waBtn');
-  if(WHATSAPP){wa.style.display='';wa.href=`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(txt)}`;} else wa.style.display='none';
+${o.historia}`;
+  return o;
+}
+async function sendOrder(o,extra){
+  if(!WEB3FORMS_KEY) return false;
+  try{
+    const r=await fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({
+      access_key:WEB3FORMS_KEY, subject:`ENCARGO ${o.code} · ${o.plan} · ${o.para}${extra&&extra.paid?' · PAGADO':''}`,
+      from_name:'ONLY YOURS web', replyto:o.email, pedido:o.txt, estado:extra?JSON.stringify(extra):'pendiente de pago'
+    })});
+    const j=await r.json(); return !!j.success;
+  }catch(e){return false;}
+}
+function loadSdk(){
+  if(sdkLoading) return sdkLoading;
+  sdkLoading=new Promise((res,rej)=>{
+    if(window.paypal) return res();
+    const s=document.createElement('script');
+    s.src=`https://www.paypal.com/sdk/js?client-id=${PAYPAL_CLIENT_ID}&currency=EUR&intent=capture&locale=es_ES&disable-funding=paylater`;
+    s.onload=()=>res(); s.onerror=()=>rej(new Error('sdk')); document.head.appendChild(s);
+  });
+  return sdkLoading;
+}
+function showFallback(o){
+  const fb=document.getElementById('payFallback'); fb.style.display='';
+  const pay=document.getElementById('payBtn'); pay.href=PAY_LINKS[o.plan]; pay.textContent=`Pagar ${o.price} € con tarjeta`;
+  document.getElementById('mailBtn').href=`mailto:${CONTACT_MAIL}?subject=${encodeURIComponent('Encargo '+o.code+' · '+o.plan)}&body=${encodeURIComponent(o.txt)}`;
+}
+document.getElementById('orderForm').addEventListener('submit',async e=>{
+  e.preventDefault();
+  for(const id of ['nombre','email','para','historia']){const el=document.getElementById(id); if(!el.value.trim()){el.focus(); el.style.borderColor='#e4563b'; return;} el.style.borderColor='';}
+  ORDER=buildOrder();
+  document.getElementById('summaryText').textContent=ORDER.txt;
+  document.getElementById('orderCode').textContent=`Encargo ${ORDER.code} · ${ORDER.plan} · ${ORDER.price} €`;
   const s=document.getElementById('summary'); s.classList.add('show'); s.scrollIntoView({behavior:'smooth',block:'start'});
+  const st=document.getElementById('payStatus'); st.textContent='Guardando tu historia…';
+  sendOrder(ORDER,null).then(ok=>{ st.textContent= ok ? 'Historia guardada. Completa el pago para confirmar el encargo.' : ''; });
+  const box=document.getElementById('paypal-buttons'); box.innerHTML='';
+  try{
+    await loadSdk();
+    paypal.Buttons({
+      style:{layout:'vertical',color:'gold',shape:'pill',label:'pay'},
+      createOrder:(data,actions)=>actions.order.create({purchase_units:[{amount:{currency_code:'EUR',value:String(ORDER.price)},description:`ONLY YOURS – ${ORDER.plan} – ${ORDER.para}`.slice(0,127),custom_id:ORDER.code}]}),
+      onApprove:async(data,actions)=>{
+        st.textContent='Confirmando el pago…';
+        let cap=null; try{ cap=await actions.order.capture(); }catch(err){}
+        const txid=cap&&cap.purchase_units&&cap.purchase_units[0].payments&&cap.purchase_units[0].payments.captures[0].id || data.orderID;
+        await sendOrder(ORDER,{paid:true,paypal_order:data.orderID,transaccion:txid,importe:ORDER.price+' €'});
+        document.getElementById('summary').style.display='none';
+        const t=document.getElementById('thanks'); t.style.display='block';
+        document.getElementById('thanksMail').textContent=ORDER.email;
+        document.getElementById('thanksRef').textContent=ORDER.code+' · '+txid;
+        t.scrollIntoView({behavior:'smooth',block:'start'});
+      },
+      onError:()=>{ showFallback(ORDER); st.textContent='No se pudo cargar el pago integrado. Usa el botón de pago alternativo.'; }
+    }).render('#paypal-buttons');
+  }catch(err){ showFallback(ORDER); }
 });
 document.getElementById('copyBtn').addEventListener('click',async()=>{
   const t=document.getElementById('summaryText').textContent;
-  try{await navigator.clipboard.writeText(t); toast('Resumen copiado. Pégalo en tu correo o WhatsApp.');}
-  catch(_){const r=document.createRange(); r.selectNodeContents(document.getElementById('summaryText')); const sel=getSelection(); sel.removeAllRanges(); sel.addRange(r); toast('Texto seleccionado: cópialo con Cmd/Ctrl+C');}
+  try{await navigator.clipboard.writeText(t); toast('Resumen copiado.');}catch(_){toast('Selecciona el resumen y cópialo con Cmd/Ctrl+C');}
 });
+function toast(m){const t=document.getElementById('toast'); t.textContent=m; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2600);}
 // reproductor
 (function(){const a=document.getElementById('audio'),b=document.getElementById('playBtn'),d=document.querySelector('.demo'),bar=document.getElementById('bar'),pr=document.getElementById('progress'),cur=document.getElementById('cur'),dur=document.getElementById('dur'),ico=document.getElementById('playIco');
  if(!a) return; const fmt=s=>{s=Math.floor(s||0);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');};
@@ -503,7 +551,6 @@ document.getElementById('copyBtn').addEventListener('click',async()=>{
  a.addEventListener('timeupdate',()=>{cur.textContent=fmt(a.currentTime); if(a.duration) bar.style.width=(a.currentTime/a.duration*100)+'%';});
  pr.addEventListener('click',e=>{const r=pr.getBoundingClientRect(); if(a.duration) a.currentTime=(e.clientX-r.left)/r.width*a.duration;});
 })();
-function toast(m){const t=document.getElementById('toast'); t.textContent=m; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2600);}
 </script>
 </body>
 </html>
