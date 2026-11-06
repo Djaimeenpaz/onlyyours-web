@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Canjea tu canción regalo — ONLY YOURS</title>
+<meta name="description" content="Canciones personalizadas con tu historia. Bodas, aniversarios, mascotas, homenajes, empresas y canción legado. Desde 39 €.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0B1A33; --navy-2:#142a52; --coral:#FF6A4D; --coral-d:#e4563b; --coral-l:#FFE4DC; --gold:#E8B04B; --gold-l:#FBEFD6;
+    --cream:#FBF7F2; --ink:#1c2233; --muted:#5f6878; --line:#eadfd3; --white:#fff;
+    --r:20px; --shadow:0 16px 48px rgba(11,26,51,.10);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background:var(--cream);line-height:1.6;overflow-x:hidden}
+  h1,h2,h3{font-family:"Playfair Display",Georgia,serif;color:var(--navy);margin:0 0 .4em;line-height:1.12;font-weight:600}
+  h1{font-size:clamp(2.2rem,5.4vw,3.8rem)} h2{font-size:clamp(1.7rem,3.4vw,2.5rem)} h3{font-size:1.3rem}
+  p{margin:0 0 1em}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 22px}
+  .eyebrow{display:inline-block;font-size:.76rem;letter-spacing:.2em;text-transform:uppercase;color:var(--coral);font-weight:700;margin-bottom:.9em}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:15px 28px;border-radius:999px;font-weight:600;text-decoration:none;border:0;cursor:pointer;font-size:1rem;transition:.18s;font-family:inherit}
+  .btn-primary{background:var(--coral);color:#fff;box-shadow:0 10px 24px rgba(255,106,77,.28)}
+  .btn-primary:hover{background:var(--coral-d);transform:translateY(-2px)}
+  .btn-ghost{background:transparent;color:var(--navy);border:2px solid var(--navy)}
+  .btn-ghost:hover{background:var(--navy);color:#fff}
+  .btn-navy{background:var(--navy);color:#fff}
+  .btn-navy:hover{background:var(--navy-2);transform:translateY(-2px)}
+  .btn-gold{background:var(--gold);color:var(--navy)}
+  .btn-gold:hover{filter:brightness(1.06);transform:translateY(-2px)}
+  .btn-paypal{background:var(--coral);color:#fff;box-shadow:0 10px 24px rgba(255,106,77,.28)}
+  .btn-paypal:hover{background:var(--coral-d);transform:translateY(-2px)}
+
+  .glow{position:absolute;border-radius:50%;filter:blur(60px);opacity:.5;pointer-events:none;z-index:0}
+
+  /* NAV */
+  nav{position:sticky;top:0;z-index:30;background:rgba(251,247,242,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:74px}
+  nav img{height:46px}
+  nav ul{list-style:none;display:flex;gap:26px;margin:0;padding:0;align-items:center}
+  nav li a{color:var(--navy);text-decoration:none;font-weight:500;font-size:.95rem}
+  nav li a:hover{color:var(--coral)}
+  @media(max-width:860px){nav ul{display:none}}
+
+  /* HERO */
+  .hero{position:relative;padding:76px 0 80px;overflow:hidden;
+    background:linear-gradient(165deg,#FFF4EE 0%,#FBF7F2 55%,#F3EEF6 100%)}
+  .hero .wrap{position:relative;z-index:1;display:grid;grid-template-columns:1.1fr .9fr;gap:52px;align-items:center}
+  @media(max-width:880px){.hero .wrap{grid-template-columns:1fr}}
+  .hero img.logo{width:min(520px,100%);margin-bottom:26px}
+  .hero h1 em{font-style:italic;color:var(--coral)}
+  .hero p.lead{font-size:1.18rem;color:var(--muted);max-width:54ch}
+  .hero .cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:24px}
+  .hero .trust{margin-top:30px;display:flex;gap:26px;flex-wrap:wrap;font-size:.9rem;color:var(--muted);font-weight:500}
+  .hero .trust span::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--gold);margin-right:9px;vertical-align:middle}
+  .demo{position:relative;background:var(--navy);color:#fff;border-radius:28px;padding:34px;box-shadow:var(--shadow);overflow:hidden}
+  .demo::after{content:"";position:absolute;right:-80px;bottom:-90px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(255,106,77,.55),transparent 65%)}
+  .demo::before{content:"";position:absolute;left:-60px;top:-60px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(232,176,75,.4),transparent 65%)}
+  .demo > *{position:relative;z-index:1}
+  .demo h3{color:#fff;font-size:1.5rem;font-style:italic;font-weight:500}
+  .demo .wave{display:flex;align-items:flex-end;gap:5px;height:78px;margin:20px 0}
+  .demo .wave i{flex:1;border-radius:4px;background:linear-gradient(180deg,var(--coral),var(--gold));animation:w 1.6s ease-in-out infinite}
+  @keyframes w{0%,100%{transform:scaleY(.3)}50%{transform:scaleY(1)}}
+  .demo small{color:#c9d2e3;display:block}
+  .player{display:flex;align-items:center;gap:16px;margin:18px 0 10px}
+  .playbtn{flex:0 0 58px;width:58px;height:58px;border-radius:50%;border:0;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 10px 24px rgba(255,106,77,.4);transition:.15s}
+  .playbtn:hover{transform:scale(1.06)}
+  .demo .wave{flex:1;margin:0}
+  .demo .wave i{animation-play-state:paused;transform:scaleY(.3)}
+  .demo.playing .wave i{animation-play-state:running}
+  .progress{height:6px;background:rgba(255,255,255,.15);border-radius:999px;cursor:pointer;overflow:hidden}
+  .progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--coral),var(--gold));border-radius:999px}
+  .times{display:flex;justify-content:space-between;font-size:.78rem;color:#c9d2e3;margin-top:6px}
+  .demo .tag{display:inline-block;background:rgba(255,255,255,.12);padding:6px 12px;border-radius:999px;font-size:.78rem;margin:6px 6px 0 0;font-weight:500}
+
+  /* SECTIONS */
+  section{padding:84px 0;position:relative}
+  .center{text-align:center}
+  .sub{color:var(--muted);max-width:60ch;margin:0 auto 46px;font-size:1.06rem}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+  @media(max-width:880px){.grid3,.grid4{grid-template-columns:1fr 1fr}}
+  @media(max-width:560px){.grid3,.grid4{grid-template-columns:1fr}}
+  .card{background:#fff;border-radius:var(--r);padding:30px;box-shadow:0 6px 22px rgba(11,26,51,.05);transition:.2s;border:1px solid var(--line)}
+  .card:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
+  .step .n{font-family:"Playfair Display",serif;font-size:2.6rem;color:var(--gold);line-height:1;margin-bottom:10px}
+
+  /* OCCASIONS */
+  .occ{background:#fff}
+  .occ a.card{text-decoration:none;color:inherit;display:block}
+  .occ .card .mark{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;background:var(--coral-l)}
+  .occ .card .mark svg{width:22px;height:22px;stroke:var(--coral);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .occ .card:nth-child(2n) .mark{background:var(--gold-l)} .occ .card:nth-child(2n) .mark svg{stroke:#b9862a}
+  .occ .card p{color:var(--muted);font-size:.93rem;margin:0}
+
+  /* PRICING */
+  .pricing{background:var(--navy);color:#fff;overflow:hidden}
+  .pricing h2{color:#fff} .pricing .sub{color:#c9d2e3}
+  .plan{background:#fff;color:var(--ink);border-radius:24px;padding:34px 30px;display:flex;flex-direction:column;position:relative}
+  .plan h3{font-size:1.5rem}
+  .plan.featured{outline:3px solid var(--coral);box-shadow:0 24px 60px rgba(0,0,0,.35);transform:translateY(-8px)}
+  .plan .badge{position:absolute;top:-15px;left:50%;transform:translateX(-50%);background:var(--coral);color:#fff;font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;padding:7px 16px;border-radius:999px;font-weight:700;white-space:nowrap}
+  .plan .price{font-family:"Playfair Display",serif;font-size:3rem;color:var(--navy);margin:8px 0 0;line-height:1}
+  .plan .for{color:var(--muted);font-size:.94rem;min-height:3em;margin-top:10px}
+  .plan ul{list-style:none;padding:0;margin:14px 0 26px;flex:1}
+  .plan li{padding:8px 0;border-bottom:1px solid var(--line);font-size:.95rem}
+  .plan li::before{content:"—";color:var(--coral);margin-right:10px;font-weight:700}
+  .plan .btn{width:100%}
+
+  /* LEGADO */
+  .legado{background:linear-gradient(180deg,#F3EEF6 0%,var(--cream) 100%)}
+  .legado .inner{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+  @media(max-width:880px){.legado .inner{grid-template-columns:1fr}}
+  .legado blockquote{font-family:"Playfair Display",serif;font-style:italic;font-size:clamp(1.3rem,2.4vw,1.75rem);color:var(--navy);margin:0 0 24px;line-height:1.4;border-left:4px solid var(--gold);padding-left:22px}
+  .legado .box{background:#fff;border-radius:24px;padding:34px;box-shadow:var(--shadow);border:1px solid var(--line)}
+  .legado .box h3{font-size:1.5rem}
+  .legado .box ul{list-style:none;padding:0;margin:16px 0 22px}
+  .legado .box li{padding:9px 0;border-bottom:1px solid var(--line);font-size:.95rem}
+  .legado .box li::before{content:"—";color:var(--gold);margin-right:10px;font-weight:700}
+  .legado .price{font-family:"Playfair Display",serif;font-size:2.4rem;color:var(--navy);line-height:1}
+  .legado .price small{font-family:Inter;font-size:.9rem;color:var(--muted);font-weight:500}
+
+  /* FORM */
+  .order{background:#fff;border-radius:28px;box-shadow:var(--shadow);padding:44px;max-width:880px;margin:0 auto;position:relative;z-index:1;border:1px solid var(--line)}
+  @media(max-width:600px){.order{padding:26px 18px}}
+  .order .row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:600px){.order .row{grid-template-columns:1fr}}
+  label{display:block;font-weight:600;font-size:.88rem;margin:16px 0 6px;color:var(--navy)}
+  input,select,textarea{width:100%;padding:13px 15px;border:1.5px solid var(--line);border-radius:12px;font:inherit;background:#fff;color:var(--ink)}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--coral);box-shadow:0 0 0 4px rgba(255,106,77,.13)}
+  textarea{min-height:150px;resize:vertical}
+  .pills{display:flex;gap:10px;flex-wrap:wrap}
+  .pills label{margin:0}
+  .pill{display:inline-block;padding:10px 16px;border:1.5px solid var(--line);border-radius:999px;cursor:pointer;font-weight:500;font-size:.92rem;transition:.15s}
+  .pill input{display:none}
+  .pill:has(input:checked){background:var(--navy);color:#fff;border-color:var(--navy)}
+  .hint{font-size:.84rem;color:var(--muted);margin-top:6px}
+  .summary{margin-top:28px;background:var(--cream);border:1px solid var(--line);border-radius:20px;padding:24px;display:none}
+  .summary.show{display:block}
+  .summary pre{white-space:pre-wrap;font-family:inherit;font-size:.92rem;background:#fff;padding:16px;border-radius:14px;max-height:260px;overflow:auto;border:1px solid var(--line)}
+  .summary .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+  .steps-pay{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:10px}
+  @media(max-width:600px){.steps-pay{grid-template-columns:1fr}}
+  .steps-pay div{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;font-size:.88rem}
+  .steps-pay b{display:block;color:var(--coral);margin-bottom:3px}
+  .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--navy);color:#fff;padding:12px 22px;border-radius:999px;opacity:0;transition:.25s;pointer-events:none;font-weight:500;z-index:50}
+  .toast.show{opacity:1;transform:translateX(-50%)}
+
+  /* FAQ */
+  details{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 20px;margin-bottom:10px}
+  summary{cursor:pointer;font-weight:600;color:var(--navy);list-style:none;display:flex;justify-content:space-between;align-items:center}
+  summary::after{content:"+";color:var(--coral);font-size:1.4rem}
+  details[open] summary::after{content:"–"}
+  details p{margin:12px 0 0;color:var(--muted)}
+
+  /* FOOTER */
+  footer{background:var(--navy);color:#b9c3d6;padding:50px 0 30px;font-size:.9rem}
+  footer .wrap{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;align-items:center}
+  footer img{height:56px;filter:brightness(0) invert(1)}
+  footer a{color:#fff;text-decoration:none}
+  footer .legal{width:100%;border-top:1px solid rgba(255,255,255,.12);padding-top:18px;margin-top:10px;font-size:.8rem;color:#8b97ad}
+</style>
+</head>
+<body><nav>
+  <div class="wrap">
+    <a href="/#top"><img src="logo.png" alt="ONLY YOURS — Your story. Your song."></a>
+    <ul>
+      <li><a href="/#como">Cómo funciona</a></li>
+      <li><a href="/#ocasiones">Ocasiones</a></li>
+      <li><a href="/#paquetes">Precios</a></li>
+      <li><a href="/#legado">Canción legado</a></li>
+      <li><a href="/#faq">Preguntas</a></li>
+      <li><a href="/#pedido" class="btn btn-primary" style="padding:11px 20px;font-size:.92rem">Encargar mi canción</a></li>
+    </ul>
+  </div>
+</nav>
+<section style="background:linear-gradient(165deg,#FFF4EE 0%,#FBF7F2 55%,#F3EEF6 100%)">
+  <div class="wrap">
+    <div class="center">
+      <span class="eyebrow">Canción regalo</span>
+      <h2>Canjea tu código y cuéntanos la historia</h2>
+      <p class="sub">Tienes una tarjeta ONLY YOURS. En dos minutos nos cuentas para quién es y qué quieres que diga; nosotros escribimos la letra, producimos la canción y te la enviamos en 72 h.</p>
+    </div>
+    <form class="order" id="giftForm" novalidate>
+      <label for="codigo">Código de tu tarjeta</label>
+      <input id="codigo" name="codigo" required placeholder="OY-______" style="text-transform:uppercase;letter-spacing:.12em;font-weight:700">
+      <label for="comercio">¿Dónde te la han regalado?</label>
+      <input id="comercio" name="comercio" placeholder="Nombre del comercio o persona">
+      <div class="row">
+        <div><label for="nombre">Tu nombre</label><input id="nombre" required></div>
+        <div><label for="email">Tu correo</label><input id="email" type="email" required placeholder="Dónde te enviamos la canción"></div>
+      </div>
+      <div class="row">
+        <div><label for="para">Para quién es</label><input id="para" required placeholder="Nombre(s) de quien la recibe (o de la mascota)"></div>
+        <div><label for="ocasion">Ocasión</label>
+          <select id="ocasion"><option>Boda</option><option>Pedida de mano</option><option>Aniversario</option><option>Cumpleaños</option><option>Nacimiento</option><option>Mi mascota</option><option>Despedida de una mascota</option><option>Homenaje / despedida</option><option>Jubilación</option><option>Navidad</option><option>Día del Padre / de la Madre</option><option>Otra</option></select></div>
+      </div>
+      <div class="row">
+        <div><label for="estilo">Estilo musical</label>
+          <select id="estilo"><option>Balada pop</option><option>Pop alegre</option><option>Acústico / guitarra</option><option>Piano y voz</option><option>Rumba / flamenco pop</option><option>Rock</option><option>Indie</option><option>Jazz / swing</option><option>Reggaeton / urbano</option><option>Infantil</option><option>Lo dejo en vuestras manos</option></select></div>
+        <div><label for="voz">Voz</label><select id="voz"><option>Femenina</option><option>Masculina</option><option>Dúo</option><option>Indiferente</option></select></div>
+      </div>
+      <div class="row">
+        <div><label for="idioma">Idioma de la letra</label><select id="idioma"><option>Castellano</option><option>Català</option><option>English</option><option>Français</option><option>Otro</option></select></div>
+        <div><label for="fecha">¿Para qué fecha la necesitas?</label><input id="fecha" type="date"></div>
+      </div>
+      <label for="historia">La historia</label>
+      <textarea id="historia" required placeholder="Cómo os conocisteis, qué os hace únicos, anécdotas, lugares, frases que decís siempre, lo que quieres que sienta al escucharla…"></textarea>
+      <label for="menciones">Nombres, fechas o palabras que deben aparecer sí o sí</label>
+      <input id="menciones" placeholder="Ej.: Marta y Joan · 14 de junio · «Cadaqués»">
+      <div style="margin-top:28px"><button type="submit" class="btn btn-primary">Canjear mi canción</button></div>
+      <div class="summary" id="ok"><h3 style="margin-top:0">¡Recibido!</h3><p>Ya tenemos tu historia. Te escribiremos a <strong id="okMail"></strong> para confirmar y, en 72 h, recibirás tu canción.</p><p class="hint" id="okFallback" style="display:none">Si no recibes confirmación en 24 h, escríbenos a <a href="mailto:hola@onlyyourssong.com">hola@onlyyourssong.com</a> con este resumen:</p><pre id="okTxt" style="display:none"></pre></div>
+    </form>
+  </div>
+</section>
+<footer><div class="wrap"><img src="logo.png" alt="ONLY YOURS"><div><strong style="color:#fff;font-family:'Playfair Display',serif;font-size:1.1rem;font-style:italic">Your story. Your song.</strong><br><a href="mailto:hola@onlyyourssong.com">hola@onlyyourssong.com</a></div><div class="legal">© ONLY YOURS · Andorra</div></div></footer>
+<script>
+const WEB3FORMS_KEY="";
+const v=id=>document.getElementById(id).value.trim();
+document.getElementById('giftForm').addEventListener('submit',async e=>{
+  e.preventDefault();
+  for(const id of ['codigo','nombre','email','para','historia']){const el=document.getElementById(id); if(!el.value.trim()){el.focus(); el.style.borderColor='#e4563b'; return;} el.style.borderColor='';}
+  const txt=`CANJE REGALO ONLY YOURS\nCódigo: ${v('codigo').toUpperCase()}\nComercio: ${v('comercio')||'-'}\nNombre: ${v('nombre')}\nCorreo: ${v('email')}\nPara: ${v('para')}\nOcasión: ${v('ocasion')}\nEstilo: ${v('estilo')} · Voz: ${v('voz')} · Idioma: ${v('idioma')}\nFecha límite: ${v('fecha')||'sin fecha'}\nDebe aparecer: ${v('menciones')||'-'}\n\nHISTORIA:\n${v('historia')}`;
+  let ok=false;
+  if(WEB3FORMS_KEY){try{const r=await fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({access_key:WEB3FORMS_KEY,subject:`CANJE ${v('codigo').toUpperCase()} · ${v('ocasion')} · ${v('para')}`,from_name:'ONLY YOURS regalo',replyto:v('email'),pedido:txt})});ok=(await r.json()).success;}catch(_){}}
+  document.getElementById('okMail').textContent=v('email');
+  if(!ok){document.getElementById('okFallback').style.display='';const p=document.getElementById('okTxt');p.style.display='';p.textContent=txt;}
+  const s=document.getElementById('ok'); s.classList.add('show'); s.scrollIntoView({behavior:'smooth'});
+});
+</script>
+</body></html>
