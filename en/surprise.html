@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ONLY YOURS SURPRISE — A song that arrives on its own, on the day and at the time you choose</title>
+<meta name="description" content="ONLY YOURS SURPRISE: send a personalised song to someone else by email or WhatsApp, scheduled, with your message and a safe anonymous sender.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0B1A33; --navy-2:#142a52; --coral:#FF6A4D; --coral-d:#e4563b; --coral-l:#FFE4DC; --gold:#E8B04B; --gold-l:#FBEFD6;
+    --cream:#FBF7F2; --ink:#1c2233; --muted:#5f6878; --line:#eadfd3; --white:#fff;
+    --r:20px; --shadow:0 16px 48px rgba(11,26,51,.10);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background:var(--cream);line-height:1.6;overflow-x:hidden}
+  h1,h2,h3{font-family:"Playfair Display",Georgia,serif;color:var(--navy);margin:0 0 .4em;line-height:1.12;font-weight:600}
+  h1{font-size:clamp(2.2rem,5.4vw,3.8rem)} h2{font-size:clamp(1.7rem,3.4vw,2.5rem)} h3{font-size:1.3rem}
+  p{margin:0 0 1em}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 22px}
+  .eyebrow{display:inline-block;font-size:.76rem;letter-spacing:.2em;text-transform:uppercase;color:var(--coral);font-weight:700;margin-bottom:.9em}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:15px 28px;border-radius:999px;font-weight:600;text-decoration:none;border:0;cursor:pointer;font-size:1rem;transition:.18s;font-family:inherit}
+  .btn-primary{background:var(--coral);color:#fff;box-shadow:0 10px 24px rgba(255,106,77,.28)}
+  .btn-primary:hover{background:var(--coral-d);transform:translateY(-2px)}
+  .btn-ghost{background:transparent;color:var(--navy);border:2px solid var(--navy)}
+  .btn-ghost:hover{background:var(--navy);color:#fff}
+  .btn-navy{background:var(--navy);color:#fff}
+  .btn-navy:hover{background:var(--navy-2);transform:translateY(-2px)}
+  .btn-gold{background:var(--gold);color:var(--navy)}
+  .btn-gold:hover{filter:brightness(1.06);transform:translateY(-2px)}
+  .btn-paypal{background:var(--coral);color:#fff;box-shadow:0 10px 24px rgba(255,106,77,.28)}
+  .btn-paypal:hover{background:var(--coral-d);transform:translateY(-2px)}
+
+  .glow{position:absolute;border-radius:50%;filter:blur(60px);opacity:.5;pointer-events:none;z-index:0}
+
+  /* NAV */
+  nav{position:sticky;top:0;z-index:30;background:rgba(251,247,242,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:74px}
+  nav img{height:46px}
+  nav ul{list-style:none;display:flex;gap:18px;margin:0;padding:0;align-items:center;white-space:nowrap}
+  nav li a{color:var(--navy);text-decoration:none;font-weight:500;font-size:.9rem}
+  nav li a:hover{color:var(--coral)}
+  .gift-bar{background:var(--navy);color:#fff;text-align:center;font-size:.92rem;padding:10px 16px}
+  .gift-bar a{color:var(--gold);font-weight:600;text-decoration:none;border-bottom:1px solid var(--gold)}
+  .gift-box{background:var(--navy);color:#fff;border-radius:20px;padding:36px 40px;display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap;margin:0 auto 56px}
+  .gift-box h3{font-family:'Playfair Display',serif;font-size:1.6rem;margin:0 0 6px}
+  .gift-box p{margin:0;opacity:.85;max-width:560px}
+  .gift-box .btn-gold{background:var(--gold);color:var(--navy);border:0}
+  @media(max-width:1000px){nav ul{display:none}}
+
+  /* HERO */
+  .hero{position:relative;padding:76px 0 80px;overflow:hidden;
+    background:linear-gradient(165deg,#FFF4EE 0%,#FBF7F2 55%,#F3EEF6 100%)}
+  .hero .wrap{position:relative;z-index:1;display:grid;grid-template-columns:1.1fr .9fr;gap:52px;align-items:center}
+  @media(max-width:880px){.hero .wrap{grid-template-columns:1fr}}
+  .hero img.logo{width:min(520px,100%);margin-bottom:26px}
+  .hero h1 em{font-style:italic;color:var(--coral)}
+  .hero p.lead{font-size:1.18rem;color:var(--muted);max-width:54ch}
+  .hero .cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:24px}
+  .hero .trust{margin-top:30px;display:flex;gap:26px;flex-wrap:wrap;font-size:.9rem;color:var(--muted);font-weight:500}
+  .hero .trust span::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--gold);margin-right:9px;vertical-align:middle}
+  .demo{position:relative;background:var(--navy);color:#fff;border-radius:28px;padding:34px;box-shadow:var(--shadow);overflow:hidden}
+  .demo::after{content:"";position:absolute;right:-80px;bottom:-90px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(255,106,77,.55),transparent 65%)}
+  .demo::before{content:"";position:absolute;left:-60px;top:-60px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(232,176,75,.4),transparent 65%)}
+  .demo > *{position:relative;z-index:1}
+  .demo h3{color:#fff;font-size:1.5rem;font-style:italic;font-weight:500}
+  .demo .wave{display:flex;align-items:flex-end;gap:5px;height:78px;margin:20px 0}
+  .demo .wave i{flex:1;border-radius:4px;background:linear-gradient(180deg,var(--coral),var(--gold));animation:w 1.6s ease-in-out infinite}
+  @keyframes w{0%,100%{transform:scaleY(.3)}50%{transform:scaleY(1)}}
+  .demo small{color:#c9d2e3;display:block}
+  .player{display:flex;align-items:center;gap:16px;margin:18px 0 10px}
+  .playbtn{flex:0 0 58px;width:58px;height:58px;border-radius:50%;border:0;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 10px 24px rgba(255,106,77,.4);transition:.15s}
+  .playbtn:hover{transform:scale(1.06)}
+  .demo .wave{flex:1;margin:0}
+  .demo .wave i{animation-play-state:paused;transform:scaleY(.3)}
+  .demo.playing .wave i{animation-play-state:running}
+  .progress{height:6px;background:rgba(255,255,255,.15);border-radius:999px;cursor:pointer;overflow:hidden}
+  .progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--coral),var(--gold));border-radius:999px}
+  .times{display:flex;justify-content:space-between;font-size:.78rem;color:#c9d2e3;margin-top:6px}
+  .demo .tag{display:inline-block;background:rgba(255,255,255,.12);padding:6px 12px;border-radius:999px;font-size:.78rem;margin:6px 6px 0 0;font-weight:500}
+
+  /* SECTIONS */
+  section{padding:84px 0;position:relative}
+  .center{text-align:center}
+  .sub{color:var(--muted);max-width:60ch;margin:0 auto 46px;font-size:1.06rem}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+  @media(max-width:880px){.grid3,.grid4{grid-template-columns:1fr 1fr}}
+  @media(max-width:560px){.grid3,.grid4{grid-template-columns:1fr}}
+  .card{background:#fff;border-radius:var(--r);padding:30px;box-shadow:0 6px 22px rgba(11,26,51,.05);transition:.2s;border:1px solid var(--line)}
+  .card:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
+  .step .n{font-family:"Playfair Display",serif;font-size:2.6rem;color:var(--gold);line-height:1;margin-bottom:10px}
+
+  /* OCCASIONS */
+  .occ{background:#fff}
+  .occ a.card{text-decoration:none;color:inherit;display:block}
+  .occ .card .mark{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;background:var(--coral-l)}
+  .occ .card .mark svg{width:22px;height:22px;stroke:var(--coral);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .occ .card:nth-child(2n) .mark{background:var(--gold-l)} .occ .card:nth-child(2n) .mark svg{stroke:#b9862a}
+  .occ .card p{color:var(--muted);font-size:.93rem;margin:0}
+
+  .btn{min-width:240px}
+  nav .btn,#copyBtn{min-width:0}
+  .hero .cta .btn{flex:1 1 240px;max-width:300px}
+  .grid4{gap:24px}
+  .card,.plan,.legado .box,.gift-box{padding:32px;border-radius:var(--r)}
+  .plan.featured{transform:none}
+  .gift-box{margin:0}
+  .dj{background:var(--navy);color:#fff}
+  .dj .inner{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+  @media(max-width:880px){.dj .inner{grid-template-columns:1fr}}
+  .dj h2{color:#fff}
+  .dj p{color:#c9d2e3;font-size:1.06rem}
+  .dj .phone{max-width:380px;margin:0 auto;border-radius:32px;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.5);border:6px solid #16284a;background:#000}
+  .dj video{display:block;width:100%;height:auto}
+  .dj .tag{display:inline-block;background:var(--coral);color:#fff;font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;padding:7px 14px;border-radius:999px;font-weight:700;margin-bottom:18px}
+  .lang{position:relative}
+  .lang select{appearance:none;-webkit-appearance:none;background:transparent;border:1.5px solid var(--line);border-radius:999px;padding:8px 28px 8px 12px;min-width:118px;font-size:.88rem;font:inherit;font-weight:600;color:var(--navy);cursor:pointer}
+  .lang::after{content:"▾";position:absolute;right:12px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--navy)}
+  .gift-bar .lang-m{display:none;margin-left:10px}
+  .gift-bar .lang-m select{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:4px 8px;font:inherit}
+  @media(max-width:1000px){.gift-bar .lang-m{display:inline-block}}
+  /* PRICING */
+  .pricing{background:var(--navy);color:#fff;overflow:hidden}
+  .pricing h2{color:#fff} .pricing .sub{color:#c9d2e3}
+  .plan{background:#fff;color:var(--ink);border-radius:24px;padding:34px 30px;display:flex;flex-direction:column;position:relative}
+  .plan h3{font-size:1.5rem}
+  .plan.featured{outline:3px solid var(--coral);box-shadow:0 24px 60px rgba(0,0,0,.35);transform:translateY(-8px)}
+  .plan .badge{position:absolute;top:-15px;left:50%;transform:translateX(-50%);background:var(--coral);color:#fff;font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;padding:7px 16px;border-radius:999px;font-weight:700;white-space:nowrap}
+  .plan .price{font-family:"Playfair Display",serif;font-size:3rem;color:var(--navy);margin:8px 0 0;line-height:1}
+  .plan .for{color:var(--muted);font-size:.94rem;min-height:3em;margin-top:10px}
+  .plan ul{list-style:none;padding:0;margin:14px 0 26px;flex:1}
+  .plan li{padding:8px 0;border-bottom:1px solid var(--line);font-size:.95rem}
+  .plan li::before{content:"—";color:var(--coral);margin-right:10px;font-weight:700}
+  .plan .btn{width:100%}
+
+  /* LEGADO */
+  .legado{background:linear-gradient(180deg,#F3EEF6 0%,var(--cream) 100%)}
+  .legado .inner{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+  @media(max-width:880px){.legado .inner{grid-template-columns:1fr}}
+  .legado blockquote{font-family:"Playfair Display",serif;font-style:italic;font-size:clamp(1.3rem,2.4vw,1.75rem);color:var(--navy);margin:0 0 24px;line-height:1.4;border-left:4px solid var(--gold);padding-left:22px}
+  .legado .box{background:#fff;border-radius:24px;padding:34px;box-shadow:var(--shadow);border:1px solid var(--line)}
+  .legado .box h3{font-size:1.5rem}
+  .legado .box ul{list-style:none;padding:0;margin:16px 0 22px}
+  .legado .box li{padding:9px 0;border-bottom:1px solid var(--line);font-size:.95rem}
+  .legado .box li::before{content:"—";color:var(--gold);margin-right:10px;font-weight:700}
+  .legado .price{font-family:"Playfair Display",serif;font-size:2.4rem;color:var(--navy);line-height:1}
+  .legado .price small{font-family:Inter;font-size:.9rem;color:var(--muted);font-weight:500}
+
+  /* FORM */
+  .order{background:#fff;border-radius:28px;box-shadow:var(--shadow);padding:44px;max-width:880px;margin:0 auto;position:relative;z-index:1;border:1px solid var(--line)}
+  @media(max-width:600px){.order{padding:26px 18px}}
+  .order .row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:600px){.order .row{grid-template-columns:1fr}}
+  label{display:block;font-weight:600;font-size:.88rem;margin:16px 0 6px;color:var(--navy)}
+  input,select,textarea{width:100%;padding:13px 15px;border:1.5px solid var(--line);border-radius:12px;font:inherit;background:#fff;color:var(--ink)}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--coral);box-shadow:0 0 0 4px rgba(255,106,77,.13)}
+  textarea{min-height:150px;resize:vertical}
+  .pills{display:flex;gap:10px;flex-wrap:wrap}
+  .pills label{margin:0}
+  .pill{display:inline-block;padding:10px 16px;border:1.5px solid var(--line);border-radius:999px;cursor:pointer;font-weight:500;font-size:.92rem;transition:.15s}
+  .pill input{display:none}
+  .pill:has(input:checked){background:var(--navy);color:#fff;border-color:var(--navy)}
+  .hint{font-size:.84rem;color:var(--muted);margin-top:6px}
+  .summary{margin-top:28px;background:var(--cream);border:1px solid var(--line);border-radius:20px;padding:24px;display:none}
+  .summary.show{display:block}
+  .summary pre{white-space:pre-wrap;font-family:inherit;font-size:.92rem;background:#fff;padding:16px;border-radius:14px;max-height:260px;overflow:auto;border:1px solid var(--line)}
+  .summary .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+  .steps-pay{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:10px}
+  @media(max-width:600px){.steps-pay{grid-template-columns:1fr}}
+  .steps-pay div{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;font-size:.88rem}
+  .steps-pay b{display:block;color:var(--coral);margin-bottom:3px}
+  .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--navy);color:#fff;padding:12px 22px;border-radius:999px;opacity:0;transition:.25s;pointer-events:none;font-weight:500;z-index:50}
+  .toast.show{opacity:1;transform:translateX(-50%)}
+
+  /* FAQ */
+  details{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 20px;margin-bottom:10px}
+  summary{cursor:pointer;font-weight:600;color:var(--navy);list-style:none;display:flex;justify-content:space-between;align-items:center}
+  summary::after{content:"+";color:var(--coral);font-size:1.4rem}
+  details[open] summary::after{content:"–"}
+  details p{margin:12px 0 0;color:var(--muted)}
+
+  /* FOOTER */
+  footer{background:var(--navy);color:#b9c3d6;padding:50px 0 30px;font-size:.9rem}
+  footer .wrap{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;align-items:center}
+  footer img{height:56px;filter:brightness(0) invert(1)}
+  footer a{color:#fff;text-decoration:none}
+  footer .legal{width:100%;border-top:1px solid rgba(255,255,255,.12);padding-top:18px;margin-top:10px;font-size:.8rem;color:#8b97ad}
+</style>
+
+<link rel="alternate" hreflang="es" href="https://onlyyourssong.com/surprise.html"><link rel="alternate" hreflang="en" href="https://onlyyourssong.com/en/surprise.html"><link rel="canonical" href="https://onlyyourssong.com/en/surprise.html">
+<style>
+  .sp-hero{background:radial-gradient(1200px 600px at 20% -10%,#1b2f5a 0%,var(--navy) 55%);color:#fff;padding:96px 0 72px;position:relative;overflow:hidden}
+  .sp-hero h1{color:#fff;font-size:clamp(2.2rem,5vw,3.6rem);line-height:1.08;margin:14px 0 18px}
+  .sp-hero p{color:#c9d2e3;font-size:1.12rem;max-width:62ch}
+  .sp-hero .eyebrow{color:var(--gold)}
+  .sp-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;max-width:920px;margin-left:auto;margin-right:auto;margin-top:-54px;position:relative;z-index:2}
+  @media(max-width:960px){.sp-grid{grid-template-columns:1fr}}
+  .sp{background:#fff;border-radius:var(--r);padding:32px;box-shadow:var(--shadow);border:1px solid var(--line);display:flex;flex-direction:column}
+  .sp .k{font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--coral)}
+  .sp h3{font-size:1.5rem;margin:8px 0 6px}
+  .sp .who{color:var(--muted);min-height:3em}
+  .sp .price{font-family:"Playfair Display",serif;font-size:2rem;color:var(--navy);margin:10px 0 0}
+  .sp .price small{font-family:Inter,sans-serif;font-size:.85rem;color:var(--muted);font-weight:500}
+  .sp ul{list-style:none;padding:0;margin:14px 0 22px;flex:1}
+  .sp li{padding:8px 0;border-bottom:1px solid var(--line);font-size:.95rem}
+  .sp li::before{content:"—";color:var(--coral);margin-right:10px;font-weight:700}
+  .sp .btn{width:100%}
+  .sp .note{font-size:.82rem;color:var(--muted);margin-top:10px}
+  .sp.featured{outline:3px solid var(--gold)}
+  .sp .badge{display:inline-block;background:var(--gold);color:var(--navy);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;padding:6px 12px;border-radius:999px;font-weight:700;margin-bottom:10px}
+  .how3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  @media(max-width:860px){.how3{grid-template-columns:1fr}}
+  .how3 .card{padding:28px}
+  .how3 .n{font-family:"Playfair Display",serif;font-size:2rem;color:var(--coral)}
+  .safe{background:#fff;border-radius:var(--r);padding:32px;border:1px solid var(--line)}
+  .safe ul{margin:10px 0 0;padding-left:18px;color:var(--ink)}
+  .safe li{margin:6px 0}
+  .partner{background:var(--navy);color:#fff}
+  .partner h2{color:#fff}.partner p{color:#c9d2e3}
+  .modal{position:fixed;inset:0;background:rgba(11,26,51,.6);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
+  .modal.show{display:flex}
+  .modal .box{background:#fff;border-radius:var(--r);padding:30px;max-width:560px;width:100%;max-height:90vh;overflow:auto}
+  .modal label{display:block;font-weight:600;font-size:.9rem;margin:12px 0 6px}
+  .modal input,.modal select,.modal textarea{width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;font:inherit}
+  .modal textarea{min-height:110px}
+  .modal .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:560px){.modal .row{grid-template-columns:1fr}}
+  .tagline{font-family:"Playfair Display",serif;font-style:italic;color:var(--gold)}
+</style>
+</head>
+<body>
+<nav>
+  <div class="wrap">
+    <a href="index.html"><img src="../logo.png" alt="ONLY YOURS — Your story. Your song."></a>
+    <ul><li><a href="#servicios">Services</a></li><li><a href="#como">How it works</a></li><li><a href="#seguridad">Safe & anonymous</a></li><li><a href="index.html">Songs</a></li><li><span class="lang"><select aria-label="Idioma" onchange="location.href=this.value"><option value="../surprise.html">Español</option><option value="../en/surprise.html" selected>English</option></select></span></li>
+      <li><a href="index.html#pedido" class="btn btn-primary" style="padding:11px 20px;font-size:.92rem">Order my song</a></li>
+    </ul>
+  </div>
+</nav>
+<header class="sp-hero" id="top">
+  <div class="wrap">
+    <span class="eyebrow">ONLY YOURS SURPRISE</span>
+    <h1>A song that arrives on its own.<br><em class="tagline">On the day and at the time you choose.</em></h1>
+    <p>You order the song with us, as always. We deliver it to whoever you choose, on the day and at the time you pick, with your message, on a listening page made for that moment. Anonymously, if you like.</p>
+  </div>
+</header>
+<section id="servicios" style="padding-top:0">
+  <div class="wrap">
+    <div class="sp-grid">
+      <div class="sp"><span class="k">Service 1</span><h3>SEND MY SONG</h3><p class="who">To send a song to someone else without being there: from far away, at midnight, or when they least expect it.</p><div class="price">+ €9 <small>on top of the song price</small></div><ul><li>Delivery by email or WhatsApp to the person you choose</li><li>Scheduled date and time (any time zone)</li><li>Your personal message alongside the song</li><li>An elegant listening page with your dedication</li><li>Visible or anonymous sender, verified</li><li>Confirmation when the song is opened</li></ul><a class="btn btn-primary" href="#" data-svc="SEND MY SONG">Send a song</a><p class="note">Available now. The song is paid on the main page; the delivery is set up here.</p></div>
+      <div class="sp featured"><span class="badge">Premium</span><span class="k">Service 2</span><h3>THE ULTIMATE SURPRISE</h3><p class="who">The complete surprise: song, video with your photos, your message in voice or video, a countdown and a listening page with your story.</p><div class="price">€99 <small>all inclusive, song + video + delivery</small></div><ul><li>Song + video with your photos (up to 20)</li><li>Scheduled delivery by email and WhatsApp, with countdown</li><li>Your recorded voice or video message before the song</li><li>Listening page with your story, photos and the lyrics</li><li>Short version for social media (30–60 s)</li><li>Confirmation when it is opened and written follow-up</li></ul><a class="btn btn-primary" href="#" data-svc="THE ULTIMATE SURPRISE">I want the full surprise</a><p class="note">Available now. We confirm the date in writing within 24 h; payment on confirmation.</p></div>
+    </div>
+  </div>
+</section>
+<section id="como" style="background:#fff">
+  <div class="wrap">
+    <div class="center"><h2>How it works</h2></div>
+    <div class="how3"><div class="card"><div class="n">01</div><h3>You order the song</h3><p style="color:var(--muted)">As always, on the main page: you tell us the story and pay for the song.</p></div><div class="card"><div class="n">02</div><h3>You set up the surprise</h3><p style="color:var(--muted)">Here you choose who, when, with which message and whether they should know who sent it.</p></div><div class="card"><div class="n">03</div><h3>We deliver it</h3><p style="color:var(--muted)">The song arrives on time by email or WhatsApp, on a listening page made for that moment. We tell you when it is opened.</p></div></div>
+  </div>
+</section>
+<section id="seguridad">
+  <div class="wrap" style="max-width:860px">
+    <div class="safe"><h2 style="margin-top:0">Anonymous sender, done right</h2><p style="color:var(--muted)">An anonymous surprise has to be a good thing for the person who receives it. That's why:</p><ul><li>We always verify the real sender's email before sending anything.</li><li>The person who receives the song can ask at any time who sent it.</li><li>A person on our team listens to every song and reads every message before it goes out; no offensive or unwanted content is ever sent.</li><li>If someone asks not to receive any more deliveries, they never receive another one.</li><li>We never share the recipient's data with third parties.</li></ul></div>
+  </div>
+</section>
+<footer>
+  <div class="wrap">
+    <img src="../logo.png" alt="ONLY YOURS">
+    <div>
+      <strong style="color:#fff;font-family:'Playfair Display',serif;font-size:1.1rem;font-style:italic">Your story. Your song.</strong><br>
+      <a id="footMail" href="#"></a>
+    </div>
+    <div class="legal">© <span id="year"></span> ONLY YOURS · Andorra · Las canciones se producen con dirección creativa humana y herramientas de inteligencia artificial.</div>
+  </div>
+</footer>
+<div class="modal" id="modal" role="dialog" aria-modal="true">
+  <div class="box">
+    <h3 style="margin-top:0">Tell us what surprise you want</h3><p class="hint" style="color:var(--muted)">We reply in writing within 24 h with availability and a firm price. Nothing is charged now.</p>
+    <form id="spForm">
+      <label>Service</label><select id="svc"><option>SEND MY SONG</option><option>THE ULTIMATE SURPRISE</option></select>
+      <div class="row"><div><label>Your name</label><input id="nombre" required></div><div><label>Your email</label><input id="email" type="email" required></div></div>
+      <div class="row"><div><label>Delivery city and country</label><input id="ciudad"></div><div><label>Preferred date</label><input id="fecha" type="date"></div></div>
+      <label>Who it's for</label><input id="para">
+      <label>Message or details</label><textarea id="msg"></textarea>
+      <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap"><button class="btn btn-primary" type="submit">Send request</button><button class="btn btn-ghost" type="button" id="close">×</button></div>
+      <p class="hint" id="spStatus" style="margin-top:12px"></p>
+    </form>
+  </div>
+</div>
+<script>
+/* ===== CONFIGURACIÓN SURPRISE (editable) ===== */
+const SURPRISE_LIVE = false;   // true cuando queramos cobrar Surprise directamente en esta página
+const SURPRISE_PRICES = { "SEND MY SONG": 9, "THE ULTIMATE SURPRISE": 99 }; // € (null = según colaborador)
+const CONTACT_MAIL = "hola.onlyyours@gmail.com";
+const WEB3FORMS_KEY = "";
+/* ============================================ */
+document.getElementById('year').textContent=new Date().getFullYear();
+const fm=document.getElementById('footMail'); fm.textContent=CONTACT_MAIL; fm.href="mailto:"+CONTACT_MAIL;
+const modal=document.getElementById('modal');
+document.querySelectorAll('[data-svc]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault(); const s=document.getElementById('svc'); [...s.options].forEach(o=>{if(o.text===a.dataset.svc) s.value=o.text;}); modal.classList.add('show');}));
+document.getElementById('close').addEventListener('click',()=>modal.classList.remove('show'));
+modal.addEventListener('click',e=>{ if(e.target===modal) modal.classList.remove('show'); });
+const v=id=>document.getElementById(id).value.trim();
+document.getElementById('spForm').addEventListener('submit',async e=>{
+  e.preventDefault();
+  const txt=`SURPRISE · ${v('svc')}\nNombre: ${v('nombre')}\nCorreo: ${v('email')}\nCiudad: ${v('ciudad')||'-'}\nFecha: ${v('fecha')||'-'}\nPara: ${v('para')||'-'}\n\n${v('msg')}`;
+  const st=document.getElementById('spStatus'); st.textContent='…';
+  let ok=false;
+  try{const r=await fetch('https://formsubmit.co/ajax/'+CONTACT_MAIL,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({_subject:'SURPRISE · '+v('svc')+' · '+v('nombre'),_template:'box',_replyto:v('email'),nombre:v('nombre'),email:v('email'),pedido:txt})}); const j=await r.json(); ok=(j.success==='true'||j.success===true);}catch(_){}
+  if(!ok && WEB3FORMS_KEY){try{const r=await fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({access_key:WEB3FORMS_KEY,subject:'SURPRISE · '+v('svc'),from_name:'ONLY YOURS surprise',replyto:v('email'),pedido:txt})}); ok=(await r.json()).success;}catch(_){}}
+  if(ok){ st.textContent="Request sent. We'll write to you within 24 h."; }
+  else { st.innerHTML="It could not be sent automatically. Email us at"+' <a href="mailto:'+CONTACT_MAIL+'?subject='+encodeURIComponent('SURPRISE · '+v('svc'))+'&body='+encodeURIComponent(txt)+'">'+CONTACT_MAIL+'</a>'; }
+});
+</script>
+</body></html>
